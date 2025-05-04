@@ -1,0 +1,217 @@
+<html>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="module" src="dist/bundle.js"></script>
+  <link href="css/index.css" rel="stylesheet" type="text/css" />
+  <link href="css/css.css" rel="stylesheet" type="text/css" />
+  <title>Vittorio Veneto</title>
+  <!-- <link rel="icon" href="css/logo.png"> -->
+</head>
+  <body class="ivory">
+    <div class="ez">
+      Designed by Colosio®
+    </div>
+
+    <!-- LOGIN STUFF -->
+      <div class="bodySign" id="login_div">
+        <h1>
+          Welcome Back!
+        </h1>
+        <div class="signBox">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Enter your username">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" autocomplete="off">
+          <button type="button" class="buttonSign" id="login">
+            Sign In
+          </button>
+        </div>
+        <div class="bottomBodySign">
+          Don't have an account yet?
+          <button type="button" class="buttonSign margin-right" id="signup">
+            Sign Up
+          </button>
+          Forgot your passoword?
+          <button type="button" id="forgot" class="buttonSign">
+            Click here
+          </button>
+        </div>
+      </div>
+    <!-- LOGIN STUFF -->
+
+    <!-- SIGNUP STUFF -->
+      <div hidden class="bodySign" id="signup_div">
+        <h1>
+          Welcome!
+        </h1>
+        <div class="signBox">
+          <label for="username">Username</label>
+          <input type="text" id="username_reg" placeholder="Enter your username">
+          <label for="email_reg">Email</label>
+          <input type="email" id="email_reg" placeholder="Enter your email">
+          <label for="password">Password</label>
+          <input type="password" id="password_reg" placeholder="Enter password" autocomplete="off">
+          <label for="confirm_password_reg">Confirm password</label>
+          <input type="password" id="confirm_password_reg" placeholder="Confirm password" autocomplete="off">
+          <button type="button" id="register_button" class="buttonSign">
+            Sign Up
+          </button>
+        </div>
+        <div class="bottomBodySign">
+          Already have an account?
+          <button type="button" id="back_register_button" class="buttonSign">
+            Sign In
+          </button>
+        </div>
+      </div>
+    <!-- SIGNUP STUFF -->
+
+    <!-- CHAT STUFF -->
+    <div hidden class="bodyChat" id="chat_div">
+      <div class="chatSidebar">
+        <div class="chatSidebarHeader">
+          <img alt="profile pic" class="resize" id="pfp">
+          <div class="profileName" id="user_name">
+
+          </div>
+        </div>
+        <div class="sidebarChatList scrollbarChat">
+          <div class="sidebarChats">
+            <div class="sidebarChatsName" id='newChat' >
+              New Chat
+            </div>
+          </div>
+<!--          <div class="sidebarChats">-->
+<!--            <div class="sidebarChatsName" id='domotics'>-->
+<!--              Domotics-->
+<!--            </div>-->
+<!--          </div>-->
+          <div id="chat_lists">
+
+          </div>
+        </div>
+      </div>
+      <!-- <div class="chat" style="display: none"> -->
+      <div class="chat">
+        <div class="chatHeader">
+          <img id="chat_picture" class="resize">
+          <div class="profileName" id="chat_name_title">
+
+          </div>
+            <div class="kebab">
+              <div class="btn-group">
+                <svg class="white-text" type="button" id="dropdownMenuButtonChat" data-bs-toggle="dropdown" aria-expanded="false" viewBox="0 0 24 24" width="32" height="32"><path fill="currentColor" d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z"></path></svg>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonChat">
+                  <li><a class="dropdown-item" id="delete_chat">Delete chat</a></li>
+                  <li><a class="dropdown-item" id="exit_chat">Exit chat</a></li>
+                </ul>
+              </div>
+            </div>
+        </div>
+        <div class="chatBody style-14 overflow-auto" id="messages_drugs">
+
+        </div>
+        <!-- <div class="row w-100 style-14 overflow-auto">
+
+        </div> -->
+
+        <div class="chatFooter">
+          <input class="input_send svgFooter" type="text" placeholder="Write a message" id="send_message">
+          <img hidden src="assets/send.svg" alt="send" id="send" class="svgFooter svgChat">
+          <img src="assets/mic.svg" alt="mic" id="voice" class="svgFooter mic svgChat">
+          <img hidden src="assets/mic.svg" alt="mic" id="btnStop" class="svgFooter mic">
+          <input type="file" id="myFile" class="file-input__input"/>
+          <label class="file-input__label" for="myFile" style="margin-bottom: 1rem">
+            <svg width="30" height="27" xmlns="http://www.w3.org/2000/svg" class="ionicon svgChat" viewBox="0 0 512 512"><title>Attach</title><path d="M216.08 192v143.85a40.08 40.08 0 0080.15 0l.13-188.55a67.94 67.94 0 10-135.87 0v189.82a95.51 95.51 0 10191 0V159.74" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"/></svg>
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- CHAT STUFF -->
+
+    <!-- GROUP STUFF -->
+    <div hidden class="bodySign bodyGroup" id="enterChat">
+      <div class="signBox bodyBox">
+        <h2>
+          Join a Group!
+        </h2>
+        <label for="group_to_enter">Group Identifier</label>
+        <input type="text" id="group_to_enter" placeholder="Enter the group identifier">
+        <label for="password">Group Password</label>
+        <input type="password" id="group_password" placeholder="Enter the group password" autocomplete="off">
+        <button type="button" id="join_group" class="buttonSign">
+          Join Group
+        </button>
+        <button type="button" id="back_group" class="buttonSign">
+          Go back
+        </button>
+      </div>
+      <div class="signBox bodyBox">
+        <h2>
+          Create a Group!
+        </h2>
+        <label for="group_to_create">Group Name</label>
+        <input type="text" id="group_to_create" placeholder="Enter a group name">
+        <label for="group_create_password">Group Password</label>
+        <input type="password" id="group_create_password" placeholder="Enter a group password" autocomplete="off">
+        <label for="group_create_image">Group Image</label>
+        <input type="file" id="group_create_image" accept="image/*">
+        <button type="button" id="create_group" class="buttonSign">
+          Create Group
+        </button>
+      </div>
+    </div>
+    <!-- GROUP STUFF -->
+
+    <!-- DOMOTICS -->
+<!--    <div hidden class="bodySign" id="domotics_div">-->
+<!--      Manege your house-->
+<!--      <div class="signBox" id="door_stuff">-->
+
+<!--      </div>-->
+<!--      <button type="button" class="buttonSign" id="domotics_back">-->
+<!--        Go back-->
+<!--      </button>-->
+<!--    </div>-->
+    <!-- DOMOTICS -->
+  </body>
+</html>
+
+<div id="myModal" class="modal-image  ">
+  <img class="modal-content-image" id="img01">
+  <div id="caption"></div>
+</div>
+
+
+<div class="modal" id="warning">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal_title_warning"></h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="confirmModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal_title"></h4>
+      </div>
+      <div class="modal-body" id="modal_content">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="confirm_modal">Confirm</button>
+        <button type="button" class="btn btn-danger chiudi" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
