@@ -7,7 +7,7 @@ import {send} from "./chatManager";
 import {startVoice} from "./VoiceManager";
 import {initializeView} from "./userManager";
 import {addChatButton} from "./LoadChat";
-//Thing needed to establish connection with firebase
+
 const firebaseConfig = require('./firebaseConfig');
 
 document.body.style.zoom = "100%";
@@ -23,7 +23,7 @@ let modal = document.getElementById("myModal");
 // TODO ALL moderator stuff: admin.html, visualize reported messages, ban evil users
 
 const { auth, database, storage } = initializeFirebase();
-setupEventListeners(auth, database, storage)
+setUp();
 
 function initializeFirebase() {
   const firebaseApp = initializeApp(firebaseConfig);
@@ -34,8 +34,48 @@ function initializeFirebase() {
   };
 }
 
-function setupEventListeners(auth, database, storage) {
+function setUp() {
+  loadLoginPage().then(
+      () => setupEventListeners()
+  );
+
+}
+
+async function loadLoginPage() {
+  const res = await fetch('templates/login_template.html');
+  const text = await res.text();
+  document.body.insertAdjacentHTML('beforeend', text);
+  const template = document.getElementById('login_temp').content.cloneNode(true);
+  document.getElementById('app').replaceChildren(template);
+
   $("#login").on("click", () => handleLogin(auth, database, storage));
+
+  $("#signup").on('click', () =>  {
+    loadRegisterPage().catch(
+        (error) => console.log(error)
+    )
+  });
+
+  $("#forgot").on("click", () => forgot(auth));
+}
+
+async function loadRegisterPage() {
+  const res = await fetch('templates/register_template.html');
+  const text = await res.text();
+  document.body.insertAdjacentHTML('beforeend', text);
+  const template = document.getElementById('register_temp').content.cloneNode(true);
+  document.getElementById('app').replaceChildren(template);
+
+  $("#back_register_button").on('click', () =>  {
+    loadLoginPage().catch(
+        (error) => console.log(error)
+    );
+  });
+
+  $("#register_button").on('click', () => registerAuth(database));
+}
+
+function setupEventListeners() {
 
   modal.onclick = function() {
     modal.style.display = "none";
@@ -44,20 +84,6 @@ function setupEventListeners(auth, database, storage) {
     send_elem.addClass("btn-outline-secondary");
     send_elem.removeAttr("style")
   }
-
-  $("#signup").on('click', () =>  {
-    $("#signup_div").prop("hidden", false);
-    $("#login_div").prop("hidden", true);
-  });
-
-  $("#back_register_button").on('click', () =>  {
-    $("#signup_div").prop("hidden", true);
-    $("#login_div").prop("hidden", false);
-  });
-
-  $("#register_button").on('click', () => registerAuth(database));
-
-  $("#forgot").on("click", () => forgot(auth));
 
   $(document).on('change','#myFile' , () =>  file_to_upload = true);
 
@@ -107,9 +133,6 @@ function setupMessageSending(database, user_id, storage) {
     if (event.key === "Enter") {
       send(database, chat_world, user_id, file_to_upload, storage);
     }
-    // else if (event.key === "p") {
-    //   window.location.hash = "#anotherpage";
-    // }
   })
 
   send_elem.on('click', () => send(database, chat_world, user_id, file_to_upload, storage));
