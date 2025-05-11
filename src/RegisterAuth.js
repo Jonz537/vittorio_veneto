@@ -24,7 +24,6 @@ function registerAuth(database) {
                 set(postListRef, {
                     name: $("#username_reg").val()
                 }).then(function() {
-                    // TODO CHECK replace hidden
                     loadRegisterPage()
                         .catch((error) => console.log(error));
                 });

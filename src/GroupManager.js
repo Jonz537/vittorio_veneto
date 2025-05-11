@@ -1,6 +1,7 @@
 import {equalTo, onValue, orderByChild, push, query, ref, set} from "firebase/database";
 import {warning} from "./Utils";
 import {ref as storageRef, uploadBytes} from "firebase/storage";
+import {loadChatPage, initializeChatView} from "./index";
 
 function joinGroup(database, user_id){
     const group_to_enter = $("#group_to_enter").val();
@@ -24,10 +25,8 @@ function joinGroup(database, user_id){
                             chatname: group_to_enter
                         });
 
-                        //TODO replace hidden
-                        $("#chat_div").removeAttr("hidden");
-                        $("#enterChat").prop("hidden", true);
-
+                        loadChatPage()
+                            .catch((error) => console.log(error));
 
                     }else{
                         warning("Credenziali errate");
@@ -71,9 +70,8 @@ function createGroup(database, storage, user_id){
             chatname: group_to_create
         });
 
-        // TODO replace hidden
-        $("#chat_div").removeAttr("hidden");
-        $("#enterChat").prop("hidden", true);
+        loadChatPage()
+            .then(() => initializeChatView(database, user_id, storageRef, storage));
     });
 }
 

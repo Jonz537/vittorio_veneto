@@ -1,11 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue } from "firebase/database";
-import { getStorage, ref as storageRef } from "firebase/storage";
+import {getDatabase, onValue, ref} from "firebase/database";
+import {getDownloadURL, getStorage, ref as storageRef} from "firebase/storage";
 import { getAuth, signInWithEmailAndPassword} from "firebase/auth";
-import {forgot, registerAuth} from "./RegisterAuth";
+import {initializeLoginPage, initializerJoinGroupPage, initializerRegisterPage} from "./listenerManager";
 import {send} from "./chatManager";
 import {startVoice} from "./VoiceManager";
-import {initializeView} from "./userManager";
 import {addChatButton} from "./LoadChat";
 
 const firebaseConfig = require('./firebaseConfig');
@@ -41,38 +40,40 @@ function setUp() {
 
 }
 
-export async function loadLoginPage() {
+async function loadLoginPage() {
   const res = await fetch('templates/login_template.html');
   const text = await res.text();
   document.body.insertAdjacentHTML('beforeend', text);
   const template = document.getElementById('login_temp').content.cloneNode(true);
   document.getElementById('app').replaceChildren(template);
 
-  $("#login").on("click", () => handleLogin(auth, database, storage));
-
-  $("#signup").on('click', () =>  {
-    loadRegisterPage().catch(
-        (error) => console.log(error)
-    )
-  });
-
-  $("#forgot").on("click", () => forgot(auth));
+  initializeLoginPage(auth, database, storage)
 }
 
-export async function loadRegisterPage() {
+async function loadChatPage() {
+  const res = await fetch('templates/chat_template.html');
+  const text = await res.text();
+  document.body.insertAdjacentHTML('beforeend', text);
+  const template = document.getElementById('chat_temp').content.cloneNode(true);
+  document.getElementById('app').replaceChildren(template);
+}
+
+async function loadRegisterPage() {
   const res = await fetch('templates/register_template.html');
   const text = await res.text();
   document.body.insertAdjacentHTML('beforeend', text);
   const template = document.getElementById('register_temp').content.cloneNode(true);
   document.getElementById('app').replaceChildren(template);
 
-  $("#back_register_button").on('click', () =>  {
-    loadLoginPage().catch(
-        (error) => console.log(error)
-    );
-  });
+  initializerRegisterPage(database);
+}
 
-  $("#register_button").on('click', () => registerAuth(database));
+async function loadGroupPage() {
+  const res = await fetch('templates/group_template.html');
+  const text = await res.text();
+  document.body.insertAdjacentHTML('beforeend', text);
+  const template = document.getElementById('group_temp').content.cloneNode(true);
+  document.getElementById('app').replaceChildren(template);
 }
 
 function setupEventListeners() {
@@ -86,7 +87,6 @@ function setupEventListeners() {
   }
 
   $(document).on('change','#myFile' , () =>  file_to_upload = true);
-
 }
 
 async function handleLogin(auth, database, storage) {
@@ -98,19 +98,32 @@ async function handleLogin(auth, database, storage) {
     const user = userCredential.user;
     const user_id = user.uid;
 
-    //TODO replace hidden
-    $("#login_div").prop("hidden", true);
-    $("#chat_div").prop("hidden", false);
-
-    initializeView(database, user_id, storageRef, storage);
-    loadUserChats(database, user_id, storage);
-    setupMessageSending(database, user_id, storage);
+    loadChatPage()
+        .then(() => initializeChatView(database, user_id, storageRef, storage))
+        .catch((error) => console.log(error));
 
   } catch (error) {
     console.error("Login failed:", error.message);
   }
 }
 
+function initializeChatView(database, user_id, storageRef, storage) {
+
+  //Download image
+  getDownloadURL(storageRef(storage, 'gs://trentochat.appspot.com/images/Wallpaper_2.jpg'))
+      .then((url) => $("#pfp").prop('src', url))
+      .catch((error) => console.log("Image error:" + error));
+
+  //Download users username
+  document.getElementById("newChat").addEventListener('click', function(){
+    loadGroupPage()
+        .then(() => initializerJoinGroupPage(database, user_id, storageRef, storage))
+        .catch((error) => console.log(error));
+  });
+
+  loadUserChats(database, user_id, storage);
+  setupMessageSending(database, user_id, storage);
+}
 
 function loadUserChats(database, user_id, storage) {
   const usernameReference = ref(database, 'chat/users/' + user_id);
@@ -127,7 +140,6 @@ function loadUserChats(database, user_id, storage) {
     }
   });
 }
-
 
 function setupMessageSending(database, user_id, storage) {
   $(document).on("keydown", (event) => {
@@ -149,4 +161,6 @@ function remove_chat_world() {
   chat_world = undefined;
 }
 
-export {remove_chat_world, set_chat_world}
+export {remove_chat_world, set_chat_world, loadChatPage, loadLoginPage,
+  loadRegisterPage, handleLogin, loadGroupPage, setupMessageSending, loadUserChats,
+  initializeChatView}
