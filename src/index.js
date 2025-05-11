@@ -41,7 +41,7 @@ function setUp() {
 
 }
 
-async function loadLoginPage() {
+export async function loadLoginPage() {
   const res = await fetch('templates/login_template.html');
   const text = await res.text();
   document.body.insertAdjacentHTML('beforeend', text);
@@ -59,7 +59,7 @@ async function loadLoginPage() {
   $("#forgot").on("click", () => forgot(auth));
 }
 
-async function loadRegisterPage() {
+export async function loadRegisterPage() {
   const res = await fetch('templates/register_template.html');
   const text = await res.text();
   document.body.insertAdjacentHTML('beforeend', text);
@@ -98,6 +98,7 @@ async function handleLogin(auth, database, storage) {
     const user = userCredential.user;
     const user_id = user.uid;
 
+    //TODO replace hidden
     $("#login_div").prop("hidden", true);
     $("#chat_div").prop("hidden", false);
 

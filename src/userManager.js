@@ -10,11 +10,13 @@ function initializeView(database, user_id, storageRef, storage) {
 
     //Download users username
     document.getElementById("newChat").addEventListener('click', function(){
+        // TODO replace hidden
         $("#enterChat").removeAttr("hidden");
         $("#chat_div").prop("hidden", true);
     });
 
     document.getElementById("back_group").addEventListener('click', function(){
+        // TODO replace hidden
         $("#enterChat").prop("hidden", true);
         $("#chat_div").prop("hidden", false);
     });

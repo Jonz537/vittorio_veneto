@@ -1,6 +1,7 @@
 import {createUserWithEmailAndPassword, getAuth, sendPasswordResetEmail} from "firebase/auth";
 import {push, ref, set} from "firebase/database";
 import {requestFoot, warning} from "./Utils";
+import {loadRegisterPage} from "./index";
 
 function registerAuth(database) {
 
@@ -23,8 +24,9 @@ function registerAuth(database) {
                 set(postListRef, {
                     name: $("#username_reg").val()
                 }).then(function() {
-                    $("#signup_div").prop("hidden", true);
-                    $("#login_div").removeAttr('hidden');
+                    // TODO CHECK replace hidden
+                    loadRegisterPage()
+                        .catch((error) => console.log(error));
                 });
             })
             .catch((error) => {

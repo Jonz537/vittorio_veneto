@@ -7,7 +7,6 @@ function joinGroup(database, user_id){
     const group_password = $("#group_password").val();
 
     if(group_to_enter != null && group_password != null){
-        // TODO tix onValue with get()
         onValue(ref(database, "chat/messages/" + group_to_enter + "/psw"),(snapshot) => {
 
             let password_giusta = snapshot.val();
@@ -25,6 +24,7 @@ function joinGroup(database, user_id){
                             chatname: group_to_enter
                         });
 
+                        //TODO replace hidden
                         $("#chat_div").removeAttr("hidden");
                         $("#enterChat").prop("hidden", true);
 
@@ -71,6 +71,7 @@ function createGroup(database, storage, user_id){
             chatname: group_to_create
         });
 
+        // TODO replace hidden
         $("#chat_div").removeAttr("hidden");
         $("#enterChat").prop("hidden", true);
     });
