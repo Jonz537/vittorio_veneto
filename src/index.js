@@ -6,13 +6,14 @@ import {initializeLoginPage, initializerJoinGroupPage, initializerRegisterPage} 
 import {send} from "./chatManager";
 import {startVoice} from "./VoiceManager";
 import {addChatButton} from "./LoadChat";
+import {User} from "./User";
 
 const firebaseConfig = require('./firebaseConfig');
 
 document.body.style.zoom = "100%";
 
-let chat_world;
-let file_to_upload = false;
+let chatWorld;
+let fileToUpload = false;
 
 let menu_hid = $("#menu_hid");
 let send_elem = $("#send");
@@ -20,6 +21,8 @@ let send_elem = $("#send");
 let modal = document.getElementById("myModal");
 
 // TODO ALL moderator stuff: admin.html, visualize reported messages, ban evil users
+// TODO fix came case
+let activeUser;
 
 const { auth, database, storage } = initializeFirebase();
 setUp();
@@ -86,7 +89,7 @@ function setupEventListeners() {
     send_elem.removeAttr("style")
   }
 
-  $(document).on('change','#myFile' , () =>  file_to_upload = true);
+  $(document).on('change','#myFile' , () =>  fileToUpload = true);
 }
 
 async function handleLogin(auth, database, storage) {
@@ -129,13 +132,16 @@ function loadUserChats(database, user_id, storage) {
   const usernameReference = ref(database, 'chat/users/' + user_id);
 
   onValue(usernameReference, async (snapshot) => {
-    const username = snapshot.val();
-    $("#user_name").html(`${username.name}<br>`);
+    const user = snapshot.val();
+
+    activeUser = new User(user.name, user.roles);
+
+    $("#user_name").html(`${user.name}<br>`);
     $("#chat_lists").empty();
 
-    for (let property in username.chats) {
-      if (!username.chats.hasOwnProperty(property)) continue;
-      const chat = username.chats[property];
+    for (let property in user.chats) {
+      if (!user.chats.hasOwnProperty(property)) continue;
+      const chat = user.chats[property];
       await addChatButton(chat, property, database, storage, user_id);
     }
   });
@@ -144,21 +150,21 @@ function loadUserChats(database, user_id, storage) {
 function setupMessageSending(database, user_id, storage) {
   $(document).on("keydown", (event) => {
     if (event.key === "Enter") {
-      send(database, chat_world, user_id, file_to_upload, storage);
+      send(database, chatWorld, user_id, fileToUpload, storage);
     }
   })
 
-  send_elem.on('click', () => send(database, chat_world, user_id, file_to_upload, storage));
+  send_elem.on('click', () => send(database, chatWorld, user_id, fileToUpload, storage));
 
-  $("#voice").on('click', () => startVoice(database, user_id, chat_world, storage));
+  $("#voice").on('click', () => startVoice(database, user_id, chatWorld, storage));
 }
 
 function set_chat_world(chat_to_set) {
-  chat_world = chat_to_set;
+  chatWorld = chat_to_set;
 }
 
 function remove_chat_world() {
-  chat_world = undefined;
+  chatWorld = undefined;
 }
 
 export {remove_chat_world, set_chat_world, loadChatPage, loadLoginPage,
