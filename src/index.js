@@ -7,6 +7,7 @@ import {send} from "./chatManager";
 import {startVoice} from "./VoiceManager";
 import {addChatButton} from "./LoadChat";
 import {User} from "./User";
+import {ciao} from "./admin";
 
 const firebaseConfig = require('./firebaseConfig');
 
@@ -40,7 +41,6 @@ function setUp() {
   loadLoginPage().then(
       () => setupEventListeners()
   );
-
 }
 
 async function loadLoginPage() {

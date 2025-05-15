@@ -1,2 +1,3 @@
 /node_modules/
 /src/firebaseConfig.js
+/firebase-admin-server/serviceAccountKey.json
