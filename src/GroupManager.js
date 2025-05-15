@@ -3,22 +3,22 @@ import {warning} from "./Utils";
 import {ref as storageRef, uploadBytes} from "firebase/storage";
 import {loadChatPage, initializeChatView} from "./index";
 
-function joinGroup(database, user_id){
+function joinGroup(database, userId){
     const group_to_enter = $("#group_to_enter").val();
     const group_password = $("#group_password").val();
 
     if(group_to_enter != null && group_password != null){
         onValue(ref(database, "chat/messages/" + group_to_enter + "/psw"),(snapshot) => {
 
-            let password_giusta = snapshot.val();
+            let passwordGiusta = snapshot.val();
 
-            let query_already_group = query(ref(database, "chat/users/" + user_id + "/chats"), orderByChild("chatname"), equalTo(group_to_enter));
+            let queryAlreadyInGroup = query(ref(database, "chat/users/" + userId + "/chats"), orderByChild("chatname"), equalTo(group_to_enter));
 
-            onValue(query_already_group, (snapshot) => {
+            onValue(queryAlreadyInGroup, (snapshot) => {
 
                 if(!snapshot.exists()){
-                    if(group_password === password_giusta){
-                        const join_group_ref = ref(database, 'chat/users/' + user_id + '/chats');
+                    if(group_password === passwordGiusta){
+                        const join_group_ref = ref(database, 'chat/users/' + userId + '/chats');
                         const new_join_group_ref = push(join_group_ref);
 
                         set(new_join_group_ref, {
@@ -45,7 +45,7 @@ function joinGroup(database, user_id){
     }
 }
 
-function createGroup(database, storage, user_id){
+function createGroup(database, storage, userId){
     const group_to_create = $("#group_to_create").val();
     const group_create_password = $("#group_create_password").val();
 
@@ -63,15 +63,15 @@ function createGroup(database, storage, user_id){
             psw: group_create_password
         }).catch();
 
-        const join_group_ref = ref(database, 'chat/users/' + user_id + '/chats');
-        const new_join_group_ref = push(join_group_ref);
+        const joinGroupRef = ref(database, 'chat/users/' + userId + '/chats');
+        const newJoinGroupRef = push(joinGroupRef);
 
-        set(new_join_group_ref, {
+        set(newJoinGroupRef, {
             chatname: group_to_create
         });
 
         loadChatPage()
-            .then(() => initializeChatView(database, user_id, storageRef, storage));
+            .then(() => initializeChatView(database, userId, storageRef, storage));
     });
 }
 

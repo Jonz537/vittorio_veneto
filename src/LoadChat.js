@@ -4,7 +4,7 @@ import {deleteChat, exitChat, send} from "./chatManager";
 import {set_chat_world} from "./index";
 import {startVoice} from "./VoiceManager";
 
-async function addChatButton(chat, property, database, storage, user_id) {
+async function addChatButton(chat, property, database, storage, userId) {
     const chatId = chat.chatname.replace(/\s/g, "_");
 
     $("#chat_lists").append(`
@@ -21,7 +21,7 @@ async function addChatButton(chat, property, database, storage, user_id) {
         set_chat_world(chatId);
         let chat_world_id = property;
         $("#chat_name_title").text(chat.chatname);
-        handleChatClick(chatId, chat_world_id, database, storage, user_id)
+        handleChatClick(chatId, chat_world_id, database, storage, userId)
     });
 
     const lastMessageQuery = query(ref(database, `chat/messages/${chat.chatname}/messages`), orderByKey(), limitToLast(1));
@@ -35,10 +35,10 @@ async function addChatButton(chat, property, database, storage, user_id) {
     });
 }
 
-async function handleChatClick(chat_world, chat_world_id, database, storage, user_id) {
-    $("#chat_name_title").html(chat_world);
+async function handleChatClick(chatWorld, chatWorldId, database, storage, userId) {
+    $("#chat_name_title").html(chatWorld);
 
-    const imageRef = ref(database, 'chat/messages/' + chat_world);
+    const imageRef = ref(database, 'chat/messages/' + chatWorld);
     const snapshotImg = await get(imageRef);
 
     const imagePath = snapshotImg.val()?.img;
@@ -50,10 +50,10 @@ async function handleChatClick(chat_world, chat_world_id, database, storage, use
         console.error("Image path not found in the database.");
     }
 
-    document.getElementById("delete_chat").addEventListener("click", () => deleteChat(database, chat_world));
-    document.getElementById("exit_chat").addEventListener("click", () => exitChat(database, chat_world, chat_world_id, user_id));
+    document.getElementById("delete_chat").addEventListener("click", () => deleteChat(database, chatWorld));
+    document.getElementById("exit_chat").addEventListener("click", () => exitChat(database, chatWorld, chatWorldId, userId));
 
-    const messagesRef = ref(database, 'chat/messages/' + chat_world + '/messages');
+    const messagesRef = ref(database, 'chat/messages/' + chatWorld + '/messages');
     const userList = {};
     let loadedMessageIds = new Set();
 
@@ -71,7 +71,7 @@ async function handleChatClick(chat_world, chat_world_id, database, storage, use
 
             const message = messages[messageId];
 
-            await addText(message, user_id, messageId, userList, database, storage);
+            await addText(message, userId, messageId, userList, database, storage);
         }
         document.getElementById("messages_drugs").scrollTo(0, document.getElementById("messages_drugs").scrollHeight);
     } catch (error) {
@@ -86,15 +86,15 @@ async function handleChatClick(chat_world, chat_world_id, database, storage, use
         if (loadedMessageIds.has(messageId)) return;
         loadedMessageIds.add(messageId);
 
-        await addText(message, user_id, messageId, userList, database, storage);
+        await addText(message, userId, messageId, userList, database, storage);
 
         document.getElementById("messages_drugs").scrollTo(0, document.getElementById("messages_drugs").scrollHeight);
     });
 
 }
 
-async function addText(message, user_id, messageId, userList, database, storage) {
-    const isSender = message.sender === user_id;
+async function addText(message, userId, messageId, userList, database, storage) {
+    const isSender = message.sender === userId;
 
     if (message.type === "text") {
         await handleTextMessage(message, messageId, isSender, userList, database);

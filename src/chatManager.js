@@ -3,26 +3,26 @@ import {push, ref, set} from "firebase/database";
 import {ref as storageRef, uploadBytes} from "firebase/storage";
 import {remove_chat_world} from "./index";
 
-function send(database, chat_world, user_id, file_to_upload, storage) {
-    if(chat_world){
+function send(database, chatWorld, userId, fileToUpload, storage) {
+    if(chatWorld){
         if(($("#send_message").val() !== "" )){
-            sendMessage(database, chat_world, user_id)
+            sendMessage(database, chatWorld, userId)
                 .catch((error) => console.log(error));
-        } else if (file_to_upload) {
-            sendFile(database, chat_world, user_id, storage)
-                .then(() => file_to_upload = false)
+        } else if (fileToUpload) {
+            sendFile(database, chatWorld, userId, storage)
+                .then(() => fileToUpload = false)
                 .catch((error) => {console.log(error)})
         }
     }
 }
 
-async function sendMessage(database, chat_world, user_id) {
-    const postListRef = ref(database, 'chat/messages/' + chat_world + '/messages');
+async function sendMessage(database, chatWorld, userId) {
+    const postListRef = ref(database, 'chat/messages/' + chatWorld + '/messages');
     const newPostRef = push(postListRef);
 
     await set(newPostRef, {
         date: getTimeString(),
-        sender: user_id,
+        sender: userId,
         text : $("#send_message").val(),
         type: "text"
     });
@@ -30,8 +30,8 @@ async function sendMessage(database, chat_world, user_id) {
     $('#send_message').val('');
 }
 
-async function sendFile(database, chat_world, user_id, storage) {
-    const postListRef = ref(database, 'chat/messages/' + chat_world + '/messages');
+async function sendFile(database, chatWorld, userId, storage) {
+    const postListRef = ref(database, 'chat/messages/' + chatWorld + '/messages');
     const newPostRef = push(postListRef);
 
     let file = document.getElementById("myFile").files[0];
@@ -43,7 +43,7 @@ async function sendFile(database, chat_world, user_id, storage) {
 
     await set(newPostRef, {
         date: getTimeString(),
-        sender: user_id,
+        sender: userId,
         text : newPostRef.key ,
         type: "image"
     });
@@ -51,23 +51,23 @@ async function sendFile(database, chat_world, user_id, storage) {
 
 }
 
-function deleteChat(database, chat_world) {
+function deleteChat(database, chatWorld) {
     request("Are you sure?", "Do you really want to delete all the messages from this chat? \n They will be lost forever");
 
     document.getElementById("confirm_modal").addEventListener('click', function () {
-        set(ref(database, "chat/messages/" + chat_world + "/messages"), {
+        set(ref(database, "chat/messages/" + chatWorld + "/messages"), {
 
         }).catch((error) => console.log("error deleting the chat: " + error));
     }, {once:true});
 }
 
-function exitChat(database, chat_world, chat_world_id, user_id) {
+function exitChat(database, chatWorld, chatWorldId, userId) {
     request("Are you sure?", "Do you really want to exit this chat?");
 
     document.getElementById("confirm_modal").addEventListener('click', async function () {
 
         // console.log(chat_world_id);
-        await set(ref(database,"chat/users/" + user_id + "/chats/" + chat_world_id), {
+        await set(ref(database,"chat/users/" + userId + "/chats/" + chatWorldId), {
             chatname: null
         }).then(() => {
             remove_chat_world();

@@ -2,7 +2,7 @@ import {push, ref, set} from "firebase/database";
 import {getTimeString} from "./Utils";
 import {ref as storageRef, uploadBytes} from "firebase/storage";
 
-async function startVoice(database, user_id, chat_world, storage){
+async function startVoice(database, userId, chatWorld, storage){
 
     $("#voice").prop("hidden", true);
     $("#btnStop").prop("hidden", false);
@@ -37,14 +37,14 @@ async function startVoice(database, user_id, chat_world, storage){
         stream.getTracks() // get all tracks from the MediaStream
             .forEach( track => track.stop()); // stop each of them
 
-        if(chat_world) {
+        if(chatWorld) {
 
-            const postListRef = ref(database, 'chat/messages/' + chat_world + '/messages');
+            const postListRef = ref(database, 'chat/messages/' + chatWorld + '/messages');
             const newPostRef = push(postListRef);
 
             await set(newPostRef, {
                 date: getTimeString(),
-                sender: user_id,
+                sender: userId,
                 text : newPostRef.key,
                 type: "audio"
             });

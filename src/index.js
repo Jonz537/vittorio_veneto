@@ -99,10 +99,10 @@ async function handleLogin(auth, database, storage) {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    const user_id = user.uid;
+    const userId = user.uid;
 
     loadChatPage()
-        .then(() => initializeChatView(database, user_id, storageRef, storage))
+        .then(() => initializeChatView(database, userId, storageRef, storage))
         .catch((error) => console.log(error));
 
   } catch (error) {
@@ -110,7 +110,7 @@ async function handleLogin(auth, database, storage) {
   }
 }
 
-function initializeChatView(database, user_id, storageRef, storage) {
+function initializeChatView(database, userId, storageRef, storage) {
 
   //Download image
   getDownloadURL(storageRef(storage, 'gs://trentochat.appspot.com/images/Wallpaper_2.jpg'))
@@ -120,16 +120,16 @@ function initializeChatView(database, user_id, storageRef, storage) {
   //Download users username
   document.getElementById("newChat").addEventListener('click', function(){
     loadGroupPage()
-        .then(() => initializerJoinGroupPage(database, user_id, storageRef, storage))
+        .then(() => initializerJoinGroupPage(database, userId, storageRef, storage))
         .catch((error) => console.log(error));
   });
 
-  loadUserChats(database, user_id, storage);
-  setupMessageSending(database, user_id, storage);
+  loadUserChats(database, userId, storage);
+  setupMessageSending(database, userId, storage);
 }
 
-function loadUserChats(database, user_id, storage) {
-  const usernameReference = ref(database, 'chat/users/' + user_id);
+function loadUserChats(database, userId, storage) {
+  const usernameReference = ref(database, 'chat/users/' + userId);
 
   onValue(usernameReference, async (snapshot) => {
     const user = snapshot.val();
@@ -142,25 +142,25 @@ function loadUserChats(database, user_id, storage) {
     for (let property in user.chats) {
       if (!user.chats.hasOwnProperty(property)) continue;
       const chat = user.chats[property];
-      await addChatButton(chat, property, database, storage, user_id);
+      await addChatButton(chat, property, database, storage, userId);
     }
   });
 }
 
-function setupMessageSending(database, user_id, storage) {
+function setupMessageSending(database, userId, storage) {
   $(document).on("keydown", (event) => {
     if (event.key === "Enter") {
-      send(database, chatWorld, user_id, fileToUpload, storage);
+      send(database, chatWorld, userId, fileToUpload, storage);
     }
   })
 
-  send_elem.on('click', () => send(database, chatWorld, user_id, fileToUpload, storage));
+  send_elem.on('click', () => send(database, chatWorld, userId, fileToUpload, storage));
 
-  $("#voice").on('click', () => startVoice(database, user_id, chatWorld, storage));
+  $("#voice").on('click', () => startVoice(database, userId, chatWorld, storage));
 }
 
-function set_chat_world(chat_to_set) {
-  chatWorld = chat_to_set;
+function set_chat_world(chatToSee) {
+  chatWorld = chatToSee;
 }
 
 function remove_chat_world() {
