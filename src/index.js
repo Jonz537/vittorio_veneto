@@ -101,10 +101,20 @@ async function handleLogin(auth, database, storage) {
     const user = userCredential.user;
     const userId = user.uid;
 
-    loadChatPage()
-        .then(() => initializeChatView(database, userId, storageRef, storage))
-        .catch((error) => console.log(error));
+    auth.currentUser.getIdTokenResult()
+        .then((idTokenResult) => {
+          const claims = idTokenResult.claims;
 
+          if (claims.role === "admin") {
+            console.log("User is an admin");
+          } else if (claims.role === "moderator") {
+            console.log("User is an moderator");
+          } else {
+            loadChatPage()
+                .then(() => initializeChatView(database, userId, storageRef, storage))
+                .catch((error) => console.log(error));
+          }
+        });
   } catch (error) {
     console.error("Login failed:", error.message);
   }

@@ -25,6 +25,19 @@ app.post("/disable-user", async (req, res) => {
     }
 });
 
+app.post("/set-role", async (req, res) => {
+    const { uid, role } = req.body;
+
+    if (!uid || !role) return res.status(400).send("Missing uid or role");
+
+    try {
+        await admin.auth().setCustomUserClaims(uid, { role });
+        res.status(200).send(`Role '${role}' has been assigned to user ${uid}`);
+    } catch (err) {
+        res.status(500).send("Error setting role: " + err.message);
+    }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
