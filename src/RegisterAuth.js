@@ -22,8 +22,7 @@ function registerAuth(database) {
 
                 push(postListRef);
                 set(postListRef, {
-                    name: $("#username_reg").val(),
-                    roles: "common"
+                    name: $("#username_reg").val()
                 }).then(function() {
                     loadRegisterPage()
                         .catch((error) => console.log(error));
