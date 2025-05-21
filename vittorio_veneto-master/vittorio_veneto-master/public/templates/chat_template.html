@@ -1,0 +1,58 @@
+<template id="chat_temp">
+    <!-- CHAT STUFF -->
+    <div class="bodyChat" id="chat_div">
+        <div class="chatSidebar">
+            <div class="chatSidebarHeader">
+                <img alt="profile pic" class="resize" id="pfp">
+                <div class="profileName" id="user_name">
+
+                </div>
+            </div>
+            <div class="sidebarChatList scrollbarChat">
+                <div class="sidebarChats">
+                    <div class="sidebarChatsName" id='newChat' >
+                        New Chat
+                    </div>
+                </div>
+                <div id="chat_lists">
+
+                </div>
+            </div>
+        </div>
+        <div class="chat">
+            <div class="chatHeader">
+                <img id="chat_picture" class="resize">
+                <div class="profileName" id="chat_name_title">
+
+                </div>
+                <div class="kebab">
+                    <div class="btn-group">
+                        <svg class="white-text" type="button" id="dropdownMenuButtonChat" data-bs-toggle="dropdown" aria-expanded="false" viewBox="0 0 24 24" width="32" height="32"><path fill="currentColor" d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z"></path></svg>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonChat">
+                            <li><a class="dropdown-item" id="delete_chat">Delete chat</a></li>
+                            <li><a class="dropdown-item" id="exit_chat">Exit chat</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="chatBody style-14 overflow-auto" id="messages_drugs">
+
+            </div>
+            <!-- <div class="row w-100 style-14 overflow-auto">
+
+            </div> -->
+
+            <div class="chatFooter">
+                <input class="input_send svgFooter" type="text" placeholder="Write a message" id="send_message">
+                <img hidden src="../assets/send.svg" alt="send" id="send" class="svgFooter svgChat">
+                <img src="../assets/mic.svg" alt="mic" id="voice" class="svgFooter mic svgChat">
+                <img hidden src="../assets/mic.svg" alt="mic" id="btnStop" class="svgFooter mic">
+                <input type="file" id="myFile" class="file-input__input"/>
+                <label class="file-input__label" for="myFile" style="margin-bottom: 1rem">
+                    <svg width="30" height="27" xmlns="http://www.w3.org/2000/svg" class="ionicon svgChat" viewBox="0 0 512 512"><title>Attach</title><path d="M216.08 192v143.85a40.08 40.08 0 0080.15 0l.13-188.55a67.94 67.94 0 10-135.87 0v189.82a95.51 95.51 0 10191 0V159.74" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"/></svg>
+                </label>
+            </div>
+        </div>
+    </div>
+    <!-- CHAT STUFF -->
+</template>
