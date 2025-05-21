@@ -72,7 +72,7 @@ function exitChat(database, chatWorld, chatWorldId, userId) {
             chatname: null
         }).then(() => {
             remove_chat_world();
-            $("#messages_drugs").empty();
+            $("#messages_in_chat").empty();
             $("#chat_picture").attr('src', null);
             $("#chat_name_title").html('');
         })

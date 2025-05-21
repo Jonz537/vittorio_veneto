@@ -20,9 +20,10 @@ let send_elem = $("#send");
 
 let modal = document.getElementById("myModal");
 
-// TODO ALL moderator stuff: admin.html, visualize reported messages, ban evil users
+// TODO ALL ADMiN stuff: nomeUtente | ruolo | stato (bannanato o no) | btn banna | btn sbanna | btn promuvoi | btn declassare
 // TODO FIX immagini che buggano tutto
 // TODO FIX gli audio
+// TODO MODERATOR PUÒ bannare gli utenti nella sue chat
 
 let activeUser;
 

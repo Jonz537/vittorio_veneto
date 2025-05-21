@@ -64,7 +64,7 @@ async function handleChatClick(chatWorld, chatWorldId, database, storage, userId
         const messages = snapshot.val();
         if (!messages) return;
 
-        $("#messages_drugs").html("");
+        $("#messages_in_chat").html("");
 
         for (const messageId in messages) {
             if (!messages.hasOwnProperty(messageId)) continue;
@@ -74,7 +74,7 @@ async function handleChatClick(chatWorld, chatWorldId, database, storage, userId
 
             await addText(message, userId, messageId, userList, database, storage);
         }
-        document.getElementById("messages_drugs").scrollTo(0, document.getElementById("messages_drugs").scrollHeight);
+        document.getElementById("messages_in_chat").scrollTo(0, document.getElementById("messages_in_chat").scrollHeight);
     } catch (error) {
         console.error("Error loading messages:", error);
     }
@@ -89,7 +89,7 @@ async function handleChatClick(chatWorld, chatWorldId, database, storage, userId
 
         await addText(message, userId, messageId, userList, database, storage);
 
-        document.getElementById("messages_drugs").scrollTo(0, document.getElementById("messages_drugs").scrollHeight);
+        document.getElementById("messages_in_chat").scrollTo(0, document.getElementById("messages_in_chat").scrollHeight);
     });
 
 }
@@ -108,13 +108,14 @@ async function addText(message, userId, messageId, userList, database, storage) 
 
 async function handleTextMessage(message, messageId, isSender, userList, database) {
     if (isSender) {
-        $("#messages_drugs").append(`<div id='${messageId}' class='messageDiv'><span class='message_send'>${message.text}</span><br><span class='message_send_data'>${message.date}</span></div>`);
+        $("#messages_in_chat").append(`<div id='${messageId}' class='messageDiv'><span class='message_send'>${message.text}</span><br><span class='message_send_data'>${message.date}</span></div>`);
     } else {
         if (!userList[message.sender]) {
             const userSnap = await get(ref(database, "chat/users/" + message.sender));
             userList[message.sender] = userSnap.exists() ? userSnap.val().name : "dead_user";
         }
-        $("#messages_drugs").append(`<div class='messageDiv' id='${messageId}'><span class='message_rec_data'>${userList[message.sender]}</span><br><span class='message_rec'>${message.text}</span><br><span class='message_rec_data'>${message.date}</span></div>`);
+        $("#messages_in_chat").append(`<div class='messageDiv' id='${messageId}'><span class='message_rec_data'>${userList[message.sender]}</span><br><span class='message_rec'>${message.text}</span><br><span class='message_rec_data'>${message.date}</span></div>`);
+
         document.getElementById(messageId).addEventListener("click", () => {
                 requestFoot("Recover password",
                     "<input type='text' class='form-control w-100' placeholder='Enter your email' id='email_reset'>",
@@ -135,7 +136,7 @@ async function handleMediaMessage(message, messageId, storage, folder, isSender)
             ? `<audio controls id='${messageId}' class='' src='${url}'></audio>`
             : `<img id='${messageId}' class='image_chat' src='${url}' alt="">`;
         const className = isSender ? 'message_send_data' : 'message_rec_data';
-        $("#messages_drugs").append(`<p class='${isSender ? "text-end" : ""}'><span class=''>${mediaHtml}</span><br><span class='rounded ${className} p-1'>${message.date}</span></p>`);
+        $("#messages_in_chat").append(`<p class='${isSender ? "text-end" : ""}'><span class=''>${mediaHtml}</span><br><span class='rounded ${className} p-1'>${message.date}</span></p>`);
 
         if (folder === "images") {
             document.getElementById(messageId).onclick = function () {
