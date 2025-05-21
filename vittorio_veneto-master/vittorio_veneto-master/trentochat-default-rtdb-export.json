@@ -1,0 +1,141 @@
+{
+  "chat" : {
+    "messages" : {
+      "Figli_dei_funghi" : {
+        "img" : "nagatoro.jpg",
+        "messages" : {
+          "-MqNbXX-jsrKwDOWxTb6" : {
+            "date" : "21-12-08 06:57",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "image:122488",
+            "type" : "image"
+          },
+          "-MqYxSvf1d6hDAcx9C1H" : {
+            "date" : "21-12-10 11:48",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "Che dire follettini",
+            "type" : "text"
+          },
+          "-MqYxUZJi5whLLy4TqeI" : {
+            "date" : "21-12-10 11:49",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "Prova prova prova",
+            "type" : "text"
+          },
+          "-MqYxh7nTripAn3dteBD" : {
+            "date" : "21-12-10 11:50",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "This message has been deleted.",
+            "type" : "text"
+          },
+          "-Mq_CSGBMLD1kQfx7c4b" : {
+            "date" : "21-12-10 17:38",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "Messaggi",
+            "type" : "text"
+          },
+          "-MqskkF2DaoKV-rWH8cn" : {
+            "date" : "21-12-14 12:45",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "Colosio brutto",
+            "type" : "text"
+          },
+          "-Mr6iY5GCaDKZISbJe5a" : {
+            "date" : "21-12-17 10:30:07",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "Prova ",
+            "type" : "text"
+          },
+          "-MwaXQKpko3isGZ6qlxZ" : {
+            "date" : "22-02-23 13:23:53",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "Prova",
+            "type" : "text"
+          },
+          "-MxxeKR9dB_GNDdra4je" : {
+            "date" : "22-03-12 11:25:26",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "ciao",
+            "type" : "text"
+          },
+          "-MxxfN-b6I3aDoDVpuMV" : {
+            "date" : "22-03-12 11:29:59",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "ciao",
+            "type" : "text"
+          }
+        },
+        "partecipants" : 2,
+        "psw" : "lampadared"
+      },
+      "Mememini" : {
+        "img" : "beans.jpg",
+        "messages" : {
+          "-Mr6iTo2rP8iEBqwfJuq" : {
+            "date" : "21-12-17 10:29:49",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "Prova",
+            "type" : "text"
+          },
+          "-Mr6lAIwrfOtM6GTbDOD" : {
+            "date" : "21-12-17 10:41:33",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "banaa",
+            "type" : "text"
+          }
+        },
+        "partecipants" : 1,
+        "psw" : "asdf"
+      },
+      "Vanilla" : {
+        "img" : "beans.jpg",
+        "messages" : {
+          "-Mr6iTo2rP8iEBqwfJuq" : {
+            "date" : "21-12-17 10:29:49",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "Prova",
+            "type" : "text"
+          },
+          "-Mr6lAIwrfOtM6GTbDOD" : {
+            "date" : "21-12-17 10:41:33",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "ciao.mp3",
+            "type" : "audio"
+          },
+          "-MxxeOu0Pw2tH6ZpN9-T" : {
+            "date" : "22-03-12 11:25:45",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "ciao",
+            "type" : "text"
+          },
+          "-MyRNtHGS9Q6Azg4pUGB" : {
+            "date" : "22-03-18 10:37:22",
+            "sender" : "aFG57oKMhgYOOmMNVpmfwD2PLcj1",
+            "text" : "-MyRNtHGS9Q6Azg4pUGB",
+            "type" : "audio"
+          }
+        },
+        "psw" : "1234"
+      }
+    },
+    "users" : {
+      "aFG57oKMhgYOOmMNVpmfwD2PLcj1" : {
+        "chats" : {
+          "-Mxxko3ZsKTaRyQp1VVn" : {
+            "chatname" : "Vanilla"
+          },
+          "-MyWj-m050aKeeJmFv4E" : {
+            "chatname" : "Figli_dei_funghi"
+          }
+        },
+        "name" : "Imouto",
+        "status" : {
+          "status" : "Closed"
+        }
+      }
+    }
+  },
+  "version" : {
+    "ver" : "alpha snapshot V:0.31"
+  }
+}
