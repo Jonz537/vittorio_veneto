@@ -7,7 +7,6 @@ import {send} from "./chatManager";
 import {startVoice} from "./VoiceManager";
 import {addChatButton} from "./LoadChat";
 import {User} from "./User";
-import {ciao} from "./admin";
 
 const firebaseConfig = require('./firebaseConfig');
 
@@ -22,7 +21,9 @@ let send_elem = $("#send");
 let modal = document.getElementById("myModal");
 
 // TODO ALL moderator stuff: admin.html, visualize reported messages, ban evil users
-// TODO fix came case
+// TODO FIX immagini che buggano tutto
+// TODO FIX gli audio
+
 let activeUser;
 
 const { auth, database, storage } = initializeFirebase();
@@ -108,6 +109,7 @@ async function handleLogin(auth, database, storage) {
           if (claims.role === "admin") {
             console.log("User is an admin");
           } else if (claims.role === "moderator") {
+            // TODO sia chat sia mod poi si vede
             console.log("User is an moderator");
           } else {
             loadChatPage()
@@ -164,8 +166,6 @@ function setupMessageSending(database, userId, storage) {
     }
   })
 
-  send_elem.on('click', () => send(database, chatWorld, userId, fileToUpload, storage));
-
   $("#voice").on('click', () => startVoice(database, userId, chatWorld, storage));
 }
 
@@ -177,6 +177,11 @@ function remove_chat_world() {
   chatWorld = undefined;
 }
 
+function setFileToUpload(info) {
+  fileToUpload = info;
+}
+
+
 export {remove_chat_world, set_chat_world, loadChatPage, loadLoginPage,
   loadRegisterPage, handleLogin, loadGroupPage, setupMessageSending, loadUserChats,
-  initializeChatView}
+  initializeChatView, setFileToUpload}

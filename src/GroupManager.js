@@ -3,7 +3,7 @@ import {warning} from "./Utils";
 import {ref as storageRef, uploadBytes} from "firebase/storage";
 import {loadChatPage, initializeChatView} from "./index";
 
-function joinGroup(database, userId){
+function joinGroup(database, userId, storage){
     const group_to_enter = $("#group_to_enter").val();
     const group_password = $("#group_password").val();
 
@@ -26,7 +26,7 @@ function joinGroup(database, userId){
                         });
 
                         loadChatPage()
-                            .catch((error) => console.log(error));
+                            .then(() => initializeChatView(database, userId, storageRef, storage));
 
                     }else{
                         warning("Credenziali errate");

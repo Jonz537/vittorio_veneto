@@ -36,7 +36,7 @@ function initializerJoinGroupPage(database, userId, storageRef, storage) {
             .then(() => initializeChatView(database, userId, storageRef, storage));
     });
 
-    document.getElementById("join_group").addEventListener('click', () => joinGroup(database, userId));
+    document.getElementById("join_group").addEventListener('click', () => joinGroup(database, userId, storage));
     document.getElementById("create_group").addEventListener('click', () => createGroup(database, storage, userId));
 }
 

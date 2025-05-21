@@ -3,6 +3,7 @@ import { getDownloadURL, ref as storageRef } from "firebase/storage";
 import {deleteChat, exitChat, send} from "./chatManager";
 import {set_chat_world} from "./index";
 import {startVoice} from "./VoiceManager";
+import {requestFoot} from "./Utils";
 
 async function addChatButton(chat, property, database, storage, userId) {
     const chatId = chat.chatname.replace(/\s/g, "_");
@@ -114,6 +115,15 @@ async function handleTextMessage(message, messageId, isSender, userList, databas
             userList[message.sender] = userSnap.exists() ? userSnap.val().name : "dead_user";
         }
         $("#messages_drugs").append(`<div class='messageDiv' id='${messageId}'><span class='message_rec_data'>${userList[message.sender]}</span><br><span class='message_rec'>${message.text}</span><br><span class='message_rec_data'>${message.date}</span></div>`);
+        document.getElementById(messageId).addEventListener("click", () => {
+                requestFoot("Recover password",
+                    "<input type='text' class='form-control w-100' placeholder='Enter your email' id='email_reset'>",
+                    "<button type='button' class='btn btn-danger chiudi' data-bs-dismiss='modal'>Cancel</button><button class='btn btn-success' id='forgot_conf' data-bs-dismiss='modal'>Confirm</button> ");
+                $("#confirm_modal").off("click");
+                $("#confirm_modal").on("click",() => {
+                    console.log("banning")
+                });
+        })
     }
 }
 

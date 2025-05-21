@@ -1,7 +1,7 @@
 import {getTimeString, request} from "./Utils";
 import {push, ref, set} from "firebase/database";
 import {ref as storageRef, uploadBytes} from "firebase/storage";
-import {remove_chat_world} from "./index";
+import {setFileToUpload, remove_chat_world} from "./index";
 
 function send(database, chatWorld, userId, fileToUpload, storage) {
     if(chatWorld){
@@ -48,6 +48,7 @@ async function sendFile(database, chatWorld, userId, storage) {
         type: "image"
     });
 
+    setFileToUpload(false);
 
 }
 
