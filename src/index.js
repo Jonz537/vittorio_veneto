@@ -24,6 +24,7 @@ let modal = document.getElementById("myModal");
 // TODO FIX immagini che buggano tutto
 // TODO FIX gli audio
 // TODO MODERATOR PUÒ bannare gli utenti nella sue chat
+// TODO FIX create group chat siuum
 
 let activeUser;
 

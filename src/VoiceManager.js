@@ -38,19 +38,19 @@ async function startVoice(database, userId, chatWorld, storage){
             .forEach( track => track.stop()); // stop each of them
 
         if(chatWorld) {
-
             const postListRef = ref(database, 'chat/messages/' + chatWorld + '/messages');
             const newPostRef = push(postListRef);
-
-            await set(newPostRef, {
-                date: getTimeString(),
-                sender: userId,
-                text : newPostRef.key,
-                type: "audio"
-            });
-
             const audioRef = storageRef(storage, 'audios/' + newPostRef.key);
-            uploadBytes(audioRef, blob).catch((error) => {
+            uploadBytes(audioRef, blob)
+                .then(async () => {
+                    await set(newPostRef, {
+                        date: getTimeString(),
+                        sender: userId,
+                        text : newPostRef.key,
+                        type: "audio"
+                    });
+                })
+                .catch((error) => {
                 console.log(error)
             });
         }

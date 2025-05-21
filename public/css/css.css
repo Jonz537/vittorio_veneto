@@ -360,7 +360,7 @@ input[type="file"]::-webkit-file-upload-button {
   display: flex;
   align-items: center;
   border-left: 0.3rem solid var(--blue);
-  position: relative:
+  position: relative
 }
 
 .chatBody {
@@ -530,7 +530,7 @@ div.btn{
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
-  overflow: none; /* Enable scroll if needed */
+  overflow: scroll; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 }
