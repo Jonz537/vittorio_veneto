@@ -14,6 +14,7 @@ document.body.style.zoom = "100%";
 
 let chatWorld;
 let fileToUpload = false;
+let userRole = undefined;
 
 let menu_hid = $("#menu_hid");
 let send_elem = $("#send");
@@ -106,12 +107,10 @@ async function handleLogin(auth, database, storage) {
     auth.currentUser.getIdTokenResult()
         .then((idTokenResult) => {
           const claims = idTokenResult.claims;
+          userRole = claims.role;
 
-          if (claims.role === "admin") {
+          if (claims.role === "admin moderator") {
             console.log("User is an admin");
-          } else if (claims.role === "moderator") {
-            // TODO sia chat sia mod poi si vede
-            console.log("User is an moderator");
           } else {
             loadChatPage()
                 .then(() => initializeChatView(database, userId, storageRef, storage))
@@ -170,19 +169,21 @@ function setupMessageSending(database, userId, storage) {
   $("#voice").on('click', () => startVoice(database, userId, chatWorld, storage));
 }
 
-function set_chat_world(chatToSee) {
+export function set_chat_world(chatToSee) {
   chatWorld = chatToSee;
 }
 
-function remove_chat_world() {
+export function remove_chat_world() {
   chatWorld = undefined;
 }
 
-function setFileToUpload(info) {
+export function setFileToUpload(info) {
   fileToUpload = info;
 }
 
+export function getUserRole() {
+  return userRole;
+}
 
-export {remove_chat_world, set_chat_world, loadChatPage, loadLoginPage,
-  loadRegisterPage, handleLogin, loadGroupPage, setupMessageSending, loadUserChats,
-  initializeChatView, setFileToUpload}
+export {loadChatPage, loadLoginPage, loadRegisterPage, handleLogin,
+  loadGroupPage, setupMessageSending, loadUserChats, initializeChatView}
