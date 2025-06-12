@@ -30,27 +30,26 @@ async function sendMessage(database, chatWorld, userId) {
     $('#send_message').val('');
 }
 
-async function sendFile(database, chatWorld, userId, storage) {
-    const postListRef = ref(database, 'chat/messages/' + chatWorld + '/messages');
-    const newPostRef = push(postListRef);
-
-    let file = document.getElementById("myFile").files[0];
-    const uploadRef = storageRef(storage, 'images/' + newPostRef.key);
-
-    await uploadBytes(uploadRef, file).then(() => {
-        console.log('Uploaded a blob or file!');
-    });
-
-    await set(newPostRef, {
-        date: getTimeString(),
-        sender: userId,
-        text : newPostRef.key ,
-        type: "image"
-    });
-
-    setFileToUpload(false);
-
-}
+// async function sendFile(database, chatWorld, userId, storage) {
+//     const postListRef = ref(database, 'chat/messages/' + chatWorld + '/messages');
+//     const newPostRef = push(postListRef);
+//
+//     let file = document.getElementById("myFile").files[0];
+//     const uploadRef = storageRef(storage, 'images/' + newPostRef.key);
+//
+//     await uploadBytes(uploadRef, file).then(() => {
+//         console.log('Uploaded a blob or file!');
+//     });
+//
+//     await set(newPostRef, {
+//         date: getTimeString(),
+//         sender: userId,
+//         text : newPostRef.key ,
+//         type: "image"
+//     });
+//
+//     setFileToUpload(false);
+// }
 
 function deleteChat(database, chatWorld) {
     request("Are you sure?", "Do you really want to delete all the messages from this chat? \n They will be lost forever");
@@ -83,4 +82,4 @@ function exitChat(database, chatWorld, chatWorldId, userId) {
     });
 }
 
-export {send, sendMessage, sendFile, deleteChat, exitChat}
+export {send, sendMessage, deleteChat, exitChat}
