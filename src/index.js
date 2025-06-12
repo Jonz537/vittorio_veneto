@@ -9,7 +9,7 @@ import {addChatButton} from "./LoadChat";
 import {User} from "./User";
 import {warning} from "./Utils";
 import {changeRole} from "./admin";
-import {tableSearch} from "./sortTable";
+import {loadUserList} from "./AdminManager";
 
 const firebaseConfig = require('./firebaseConfig');
 
@@ -23,8 +23,6 @@ let menu_hid = $("#menu_hid");
 let send_elem = $("#send");
 
 let modal = document.getElementById("myModal");
-
-// TODO ALL ADMiN stuff: nomeUtente | ruolo | stato (bannanato o no) | btn banna | btn sbanna | btn promuvoi | btn declassare
 
 let activeUser;
 
@@ -41,7 +39,6 @@ function initializeFirebase() {
 }
 
 function setUp() {
-  changeRole("bvjjwg02gxeHSabW7b0UJXaJl1g2", "admin");
   loadLoginPage().then(
       () => setupEventListeners()
   );
@@ -120,7 +117,7 @@ async function handleLogin(auth, database, storage) {
 
           if (claims.role === "admin") {
             loadAdminPage()
-                .then(() => tableSearch())
+                .then(() => loadUserList(database))
                 .catch((error) => console.log(error));
           } else {
             loadChatPage()
@@ -202,3 +199,4 @@ export function getUserRole() {
 
 export {loadChatPage, loadLoginPage, loadRegisterPage, handleLogin,
   loadGroupPage, setupMessageSending, loadUserChats, initializeChatView}
+

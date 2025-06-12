@@ -51,6 +51,55 @@ app.post("/set-role", async (req, res) => {
     }
 });
 
+app.get("/get-user-status", async (req, res) => {
+    const {uid} = req.query;
+
+    if (!uid) return res.status(400).send("Missing UID");
+
+    try {
+        const userRecord = await admin.auth().getUser(uid);
+
+        const customClaims = userRecord.customClaims || {};
+        const role = customClaims.role || "none";
+        const isDisabled = userRecord.disabled === true;
+
+        res.status(200).json({
+            uid: userRecord.uid,
+            email: userRecord.email || null,
+            role: role,
+            disabled: isDisabled
+        });
+
+    } catch (error) {
+        res.status(500).json({error: error.message});
+    }
+});
+
+app.get("/get-users-status", async (req, res) => {
+    try {
+        const raw = req.query.uids;
+        const uids = JSON.parse(decodeURIComponent(raw));
+
+        const results = {};
+
+        for (const uid of uids) {
+            try {
+                const user = await admin.auth().getUser(uid);
+                results[uid] = {
+                    role: user.customClaims?.role || "none",
+                    disabled: user.disabled || false
+                };
+            } catch (err) {
+                results[uid] = { error: err.message };
+            }
+        }
+
+        res.json(results);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

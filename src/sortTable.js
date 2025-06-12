@@ -1,7 +1,7 @@
 function tableSearch() {
     document.getElementById("searchInput").addEventListener("keyup",  function () {
         let filter = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#userTable tr");
+        let rows = document.querySelectorAll("#user_list tr");
         rows.forEach(row => {
             let username = row.cells[0].textContent.toLowerCase();
             let role = row.cells[1].textContent.toLowerCase();

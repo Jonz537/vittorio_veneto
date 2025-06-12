@@ -31,4 +31,30 @@ function changeRole(userId, newRole) {
         .catch(console.error);
 }
 
-export {banUser, changeRole, enableUser}
+async function getUserData(userId){
+    try {
+        const res = await fetch("http://localhost:3000/get-user-status?uid=" + userId);
+        const data = await res.json();
+        return {
+            role: data.role,
+            disabled: data.disabled
+        };
+    } catch (err) {
+        console.error("Error:", err);
+        return null;
+    }
+}
+
+async function getUsersData(userIds){
+    try {
+        const res = await fetch("http://localhost:3000/get-users-status?uids=" + encodeURIComponent(JSON.stringify(userIds)));
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        console.error("Error:", err);
+        return null;
+    }
+}
+
+
+export {banUser, changeRole, enableUser, getUserData, getUsersData}
