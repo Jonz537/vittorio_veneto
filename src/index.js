@@ -173,6 +173,35 @@ function loadUserChats(database, userId, storage) {
     }
   });
 }
+function loadUserList(database, storage) {
+  const usersRef = ref(database, 'chat/users/');
+
+  onValue(usersRef, async (snapshot) => {
+    const users = snapshot.val();
+    $("#user_list").empty();
+
+    if (!users) return;
+
+    for (const userId in users) {
+      if (!users.hasOwnProperty(userId)) continue;
+
+      const user = users[userId];
+      const { name, roles, chats } = user;
+
+      // Mostra il nome dell'utente (o aggiungilo a una lista se necessario)
+      $("#user_list").append(
+                  `<tr>
+                    <td>${name}</td>
+                    <td>Utente</td>
+                    <td class="status-attivo">Attivo</td>
+                    <td><button class="btn btn-ban">Banna</button></td>
+                    <td><button class="btn btn-secondary" disabled>Sbanna</button></td>
+                    <td><button class="btn btn-promote">Promuovi</button></td>
+                    <td><button class="btn btn-demote">Declassa</button></td>
+                  </tr>`
+      );}
+  });
+}
 
 function setupMessageSending(database, userId, storage) {
   $(document).on("keydown", (event) => {
