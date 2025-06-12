@@ -24,9 +24,9 @@
                 <table class="table table-bordered text-white table-hover">
                     <thead>
                     <tr>
-                        <th onclick="sortTable(0)">Nome Utente </th>
-                        <th onclick="sortTable(1)">Ruolo</th>
-                        <th onclick="sortTable(2)">Stato</th>
+                        <th id="sortName">Nome Utente </th>
+                        <th id="sortRuolo">Ruolo</th>
+                        <th id="sortStato">Stato</th>
                         <th>Banna</th>
                         <th>Sbanna</th>
                         <th>Promuovi</th>
@@ -43,37 +43,17 @@
                         <td><button class="btn btn-promote">Promuovi</button></td>
                         <td><button class="btn btn-demote">Declassa</button></td>
                     </tr>
+                    <tr>
+                        <td>SkibidiToilet</td>
+                        <td>Moderatore</td>
+                        <td class="status-attivo">Attivo</td>
+                        <td><button class="btn btn-ban">Banna</button></td>
+                        <td><button class="btn btn-secondary" disabled>Sbanna</button></td>
+                        <td><button class="btn btn-promote">Promuovi</button></td>
+                        <td><button class="btn btn-demote">Declassa</button></td>
+                    </tr>
                     </tbody>
                 </table>
-
-                <script>
-                    document.getElementById("searchInput").addEventListener("keyup", function () {
-                        let filter = this.value.toLowerCase();
-                        let rows = document.querySelectorAll("#userTable tr");
-                        rows.forEach(row => {
-                            let username = row.cells[0].textContent.toLowerCase();
-                            row.style.display = username.includes(filter) ? "" : "none";
-                        });
-                    });
-
-                    function sortTable(n) {
-                        let table = document.getElementById("userTable");
-                        let rows = Array.from(table.rows);
-                        let sorted = false;
-                        while (!sorted) {
-                            sorted = true;
-                            for (let i = 0; i < rows.length - 1; i++) {
-                                let x = rows[i].cells[n].textContent.toLowerCase();
-                                let y = rows[i + 1].cells[n].textContent.toLowerCase();
-                                if (x > y) {
-                                    [rows[i], rows[i + 1]] = [rows[i + 1], rows[i]];
-                                    sorted = false;
-                                }
-                            }
-                        }
-                        rows.forEach(row => table.appendChild(row));
-                    }
-                </script>
             </div>
         </div>
     </div>

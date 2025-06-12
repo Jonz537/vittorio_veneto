@@ -602,3 +602,64 @@ div.btn{
 .svgChat{
     filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(73deg) brightness(103%) contrast(103%);
 }
+
+.search-bar {
+  margin-bottom: 1rem;
+  width: 90%;
+  margin:auto;
+  margin-top: 2%;
+  margin-bottom: 1%;
+  background-color: #22424b;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+input.form-control {
+  background-color: #1c333a;
+  color: white;
+  border: none;
+}
+
+.table {
+  background-color: #152b33;
+  width: 90%;
+  margin:auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.form-control::placeholder{
+  color: lightgray;
+}
+
+th {
+  cursor: pointer;
+}
+
+.btn {
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  border-radius: 8px;
+}
+
+.btn-ban { background-color: #dc3545; color: white; }
+.btn-unban { background-color: #28a745; color: white; }
+.btn-promote { background-color: #FFBF00; color: white; }
+.btn-demote { background-color: lightcoral; color: black; }
+button:disabled {background-color: grey}
+
+.status-attivo { color: #28a745; }
+.status-bannato { color: #dc3545; }
+
+.sort-btns button {
+  margin-right: 0.5rem;
+}
+
+.chatadmin {
+  border-left: .03rem solid var(--headerColor);
+  width: 100%;
+  position: relative;
+  height: inherit;
+  /* display: flex;
+  flex-direction: column; */
+}

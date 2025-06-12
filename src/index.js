@@ -9,6 +9,7 @@ import {addChatButton} from "./LoadChat";
 import {User} from "./User";
 import {warning} from "./Utils";
 import {changeRole} from "./admin";
+import {tableSearch} from "./sortTable";
 
 const firebaseConfig = require('./firebaseConfig');
 
@@ -119,7 +120,7 @@ async function handleLogin(auth, database, storage) {
 
           if (claims.role === "admin") {
             loadAdminPage()
-                .then()
+                .then(() => tableSearch())
                 .catch((error) => console.log(error));
           } else {
             loadChatPage()
