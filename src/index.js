@@ -117,7 +117,7 @@ async function handleLogin(auth, database, storage) {
 
           if (claims.role === "admin") {
             loadAdminPage()
-                .then(() => loadUserList(database))
+                .then(() => loadUserList(database, userId))
                 .catch((error) => console.log(error));
           } else {
             loadChatPage()

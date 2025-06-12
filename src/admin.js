@@ -1,5 +1,5 @@
-function banUser(userId) {
-    fetch("http://localhost:3000/disable-user", {
+async function banUser(userId) {
+    await fetch("http://localhost:3000/disable-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ uid: userId })
@@ -9,8 +9,8 @@ function banUser(userId) {
         .catch(err => console.error(err));
 }
 
-function enableUser(userId) {
-    fetch("http://localhost:3000/enable-user", {
+async function enableUser(userId) {
+    await fetch("http://localhost:3000/enable-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ uid: userId })
@@ -20,8 +20,8 @@ function enableUser(userId) {
         .catch(err => console.error(err));
 }
 
-function changeRole(userId, newRole) {
-    fetch("http://localhost:3000/set-role", {
+async function changeRole(userId, newRole) {
+    await fetch("http://localhost:3000/set-role", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ uid: userId, role: newRole })

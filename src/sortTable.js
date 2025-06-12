@@ -17,6 +17,7 @@ function tableSearch() {
         () => sortTable(2));
 }
 
+//TODO: fix sortTable
 function sortTable(n) {
     let table = document.getElementById("userTable");
     let rows = Array.from(table.rows);
