@@ -7,6 +7,7 @@ import {send} from "./chatManager";
 import {startVoice} from "./VoiceManager";
 import {addChatButton} from "./LoadChat";
 import {User} from "./User";
+import {warning} from "./Utils";
 
 const firebaseConfig = require('./firebaseConfig');
 
@@ -118,7 +119,11 @@ async function handleLogin(auth, database, storage) {
           }
         });
   } catch (error) {
-    console.error("Login failed:", error.message);
+    if (error.code === 'auth/user-disabled') {
+      warning("Il tuo account è stato disabilitato!")
+    } else {
+      console.error("Login failed:", error.message);
+    }
   }
 }
 
