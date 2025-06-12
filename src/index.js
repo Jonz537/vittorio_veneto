@@ -8,6 +8,7 @@ import {startVoice} from "./VoiceManager";
 import {addChatButton} from "./LoadChat";
 import {User} from "./User";
 import {warning} from "./Utils";
+import {changeRole} from "./admin";
 
 const firebaseConfig = require('./firebaseConfig');
 
@@ -23,9 +24,6 @@ let send_elem = $("#send");
 let modal = document.getElementById("myModal");
 
 // TODO ALL ADMiN stuff: nomeUtente | ruolo | stato (bannanato o no) | btn banna | btn sbanna | btn promuvoi | btn declassare
-// TODO FIX immagini che buggano tutto
-// TODO MODERATOR PUÒ bannare gli utenti nella sue chat
-// TODO FIX create group chat siuum
 
 let activeUser;
 
@@ -42,9 +40,18 @@ function initializeFirebase() {
 }
 
 function setUp() {
+  changeRole("bvjjwg02gxeHSabW7b0UJXaJl1g2", "admin");
   loadLoginPage().then(
       () => setupEventListeners()
   );
+}
+
+async function loadAdminPage() {
+  const res = await fetch('templates/admin_template.html');
+  const text = await res.text();
+  document.body.insertAdjacentHTML('beforeend', text);
+  const template = document.getElementById('admin_temp').content.cloneNode(true);
+  document.getElementById('app').replaceChildren(template);
 }
 
 async function loadLoginPage() {
@@ -111,7 +118,9 @@ async function handleLogin(auth, database, storage) {
           userRole = claims.role;
 
           if (claims.role === "admin") {
-            console.log("User is an admin");
+            loadAdminPage()
+                .then()
+                .catch((error) => console.log(error));
           } else {
             loadChatPage()
                 .then(() => initializeChatView(database, userId, storageRef, storage))
