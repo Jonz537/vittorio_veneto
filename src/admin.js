@@ -48,8 +48,7 @@ async function getUserData(userId){
 async function getUsersData(userIds){
     try {
         const res = await fetch("http://localhost:3000/get-users-status?uids=" + encodeURIComponent(JSON.stringify(userIds)));
-        const data = await res.json();
-        return data;
+        return await res.json();
     } catch (err) {
         console.error("Error:", err);
         return null;

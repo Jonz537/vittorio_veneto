@@ -13,7 +13,6 @@ async function loadUserList(database) {
     if (!users) return;
 
     const data = await getUsersData(Object.keys(users));
-    console.log(data);
 
     for (const userId in users) {
         if (!users.hasOwnProperty(userId)) continue;
