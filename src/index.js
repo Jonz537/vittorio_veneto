@@ -109,7 +109,7 @@ async function handleLogin(auth, database, storage) {
           const claims = idTokenResult.claims;
           userRole = claims.role;
 
-          if (claims.role === "admin moderator") {
+          if (claims.role === "admin") {
             console.log("User is an admin");
           } else {
             loadChatPage()

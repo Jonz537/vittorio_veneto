@@ -25,6 +25,19 @@ app.post("/disable-user", async (req, res) => {
     }
 });
 
+app.post("/enable-user", async (req, res) => {
+    const { uid } = req.body;
+
+    if (!uid) return res.status(400).send("Missing UID");
+
+    try {
+        await admin.auth().updateUser(uid, { disabled: false });
+        res.status(200).send(`User ${uid} has been enabled.`);
+    } catch (err) {
+        res.status(500).send("Error: " + err.message);
+    }
+});
+
 app.post("/set-role", async (req, res) => {
     const { uid, role } = req.body;
 
