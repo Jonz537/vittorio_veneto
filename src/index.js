@@ -26,6 +26,8 @@ let modal = document.getElementById("myModal");
 
 let activeUser;
 
+let isSending = false;
+
 const { auth, database, storage } = initializeFirebase();
 setUp();
 
@@ -174,7 +176,11 @@ function loadUserChats(database, userId, storage) {
 function setupMessageSending(database, userId, storage) {
   $(document).on("keydown", (event) => {
     if (event.key === "Enter") {
+      if (isSending) return;
+
+      isSending = true;
       send(database, chatWorld, userId, fileToUpload, storage);
+      isSending = false;
     }
   })
 

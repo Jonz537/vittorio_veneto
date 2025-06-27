@@ -1,18 +1,18 @@
 import {getTimeString, request} from "./Utils";
 import {push, ref, set} from "firebase/database";
-import {ref as storageRef, uploadBytes} from "firebase/storage";
-import {setFileToUpload, remove_chat_world} from "./index";
+import {remove_chat_world} from "./index";
 
 function send(database, chatWorld, userId, fileToUpload, storage) {
     if(chatWorld){
         if(($("#send_message").val() !== "" )){
             sendMessage(database, chatWorld, userId)
                 .catch((error) => console.log(error));
-        } else if (fileToUpload) {
-            sendFile(database, chatWorld, userId, storage)
-                .then(() => fileToUpload = false)
-                .catch((error) => {console.log(error)})
         }
+        // else if (fileToUpload) {
+        //     sendFile(database, chatWorld, userId, storage)
+        //         .then(() => fileToUpload = false)
+        //         .catch((error) => {console.log(error)})
+        // }
     }
 }
 
