@@ -6,6 +6,10 @@ import {startVoice} from "./VoiceManager";
 import {requestFoot} from "./Utils";
 import {banUser} from "./admin";
 
+const firebaseListeners = {
+    chatMessageListeners: {},
+};
+
 async function addChatButton(chat, property, database, storage, userId) {
     const chatId = chat.chatname.replace(/\s/g, "_");
 
@@ -19,11 +23,14 @@ async function addChatButton(chat, property, database, storage, userId) {
     </div>
   `);
 
-    document.getElementById(chatId).addEventListener('click', () => {
+    const chatNamespace = `chat-${chatId}`;  // simple namespace, no #
+
+    $(document).off(`click.${chatNamespace}`);
+    $(document).on(`click.${chatNamespace}`, `#${chatId}`, () => {
         set_chat_world(chatId);
         let chat_world_id = property;
         $("#chat_name_title").text(chat.chatname);
-        handleChatClick(chatId, chat_world_id, database, storage, userId)
+        handleChatClick(chatId, chat_world_id, database, storage, userId);
     });
 
     const lastMessageQuery = query(ref(database, `chat/messages/${chat.chatname}/messages`), orderByKey(), limitToLast(1));
@@ -80,19 +87,21 @@ async function handleChatClick(chatWorld, chatWorldId, database, storage, userId
         console.error("Error loading messages:", error);
     }
 
-    // Add listener for new messages
-    onChildAdded(messagesRef, async (snapshot) => {
-        const messageId = snapshot.key;
-        const message = snapshot.val();
+    if (!firebaseListeners.chatMessageListeners[chatWorld]) {
+        const listener = async (snapshot) => {
+            const messageId = snapshot.key;
+            const message = snapshot.val();
 
-        if (loadedMessageIds.has(messageId)) return;
-        loadedMessageIds.add(messageId);
+            if (loadedMessageIds.has(messageId)) return;
+            loadedMessageIds.add(messageId);
 
-        await addText(message, userId, messageId, userList, database, storage);
+            await addText(message, userId, messageId, userList, database, storage);
+            document.getElementById("messages_in_chat").scrollTo(0, document.getElementById("messages_in_chat").scrollHeight);
+        };
 
-        document.getElementById("messages_in_chat").scrollTo(0, document.getElementById("messages_in_chat").scrollHeight);
-    });
-
+        onChildAdded(messagesRef, listener);
+        firebaseListeners.chatMessageListeners[chatWorld] = listener;
+    }
 }
 
 async function addText(message, userId, messageId, userList, database, storage) {
@@ -133,26 +142,26 @@ function addBanningOption(messageId, senderId) {
     })
 }
 
-// async function handleMediaMessage(message, messageId, storage, folder, isSender) {
-//     try {
-//         const url = await getDownloadURL(storageRef(storage, `gs://trentochat.appspot.com/${folder}/` + message.text));
-//         const mediaHtml = folder === "audios"
-//             ? `<audio controls id='${messageId}' class='' src='${url}'></audio>`
-//             : `<img id='${messageId}' class='image_chat' src='${url}' alt="">`;
-//         const className = isSender ? 'message_send_data' : 'message_rec_data';
-//         $("#messages_in_chat").append(`<p class='${isSender ? "text-end" : ""}'><span class=''>${mediaHtml}</span><br><span class='rounded ${className} p-1'>${message.date}</span></p>`);
-//
-//         if (folder === "images") {
-//             document.getElementById(messageId).onclick = function () {
-//                 let modal = document.getElementById("myModal");
-//                 let modalImg = document.getElementById("img01");
-//                 modalImg.src = $(this).attr('src');
-//                 modal.style.display = "block";
-//             };
-//         }
-//     } catch (error) {
-//         console.log("Media download error: ", error);
-//     }
-// }
+async function handleMediaMessage(message, messageId, storage, folder, isSender) {
+    try {
+        const url = await getDownloadURL(storageRef(storage, `gs://trentochat.appspot.com/${folder}/` + message.text));
+        const mediaHtml = folder === "audios"
+            ? `<audio controls id='${messageId}' class='' src='${url}'></audio>`
+            : `<img id='${messageId}' class='image_chat' src='${url}' alt="">`;
+        const className = isSender ? 'message_send_data' : 'message_rec_data';
+        $("#messages_in_chat").append(`<p class='${isSender ? "text-end" : ""}'><span class=''>${mediaHtml}</span><br><span class='rounded ${className} p-1'>${message.date}</span></p>`);
+
+        if (folder === "images") {
+            document.getElementById(messageId).onclick = function () {
+                let modal = document.getElementById("myModal");
+                let modalImg = document.getElementById("img01");
+                modalImg.src = $(this).attr('src');
+                modal.style.display = "block";
+            };
+        }
+    } catch (error) {
+        console.log("Media download error: ", error);
+    }
+}
 
 export {addChatButton}

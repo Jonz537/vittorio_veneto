@@ -173,18 +173,25 @@ function loadUserChats(database, userId, storage) {
   });
 }
 
+let handleKeydownRef;
+
 function setupMessageSending(database, userId, storage) {
-  $(document).on("keydown", (event) => {
+  if (handleKeydownRef) {
+    document.removeEventListener("keydown", handleKeydownRef);
+  }
+
+  handleKeydownRef = function(event) {
     if (event.key === "Enter") {
       if (isSending) return;
-
       isSending = true;
       send(database, chatWorld, userId, fileToUpload, storage);
       isSending = false;
     }
-  })
+  };
 
-  $("#voice").on('click', () => startVoice(database, userId, chatWorld, storage));
+  document.addEventListener("keydown", handleKeydownRef);
+
+  $("#voice").off("click").on('click', () => startVoice(database, userId, chatWorld, storage));
 }
 
 export function set_chat_world(chatToSee) {
