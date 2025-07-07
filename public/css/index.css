@@ -157,3 +157,24 @@ div.btn{
 .marginless{
   margin: 0;
 }
+
+.th-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.sort-indicator {
+  font-size: 0.8em;
+}
+
+.sort-indicator {
+  color: #5b5b5b;
+  font-size: 0.8em;
+  transition: color 0.2s;
+}
+
+.sort-indicator.active {
+  color: #ffffff;
+}
