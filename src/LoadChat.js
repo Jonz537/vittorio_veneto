@@ -124,7 +124,7 @@ async function handleTextMessage(message, messageId, isSender, userList, databas
             const userSnap = await get(ref(database, "chat/users/" + message.sender));
             userList[message.sender] = userSnap.exists() ? userSnap.val().name : "dead_user";
         }
-        $("#messages_in_chat").append(`<div class='messageDiv' id='${messageId}'><span class='message_rec_data'>${userList[message.sender]}</span><br><span class='message_rec'>${message.text}</span><br><span class='message_rec_data'>${message.date}</span></div>`);
+        $("#messages_in_chat").append(`<div class='messageDiv' id='${messageId}'><span class='message_rec_sender'>${userList[message.sender]}</span><br><span class='message_rec'>${message.text}</span><br><span class='message_rec_data'>${message.date}</span></div>`);
         if (getUserRole() === "moderator") {
             addBanningOption(messageId, message.sender);
         }

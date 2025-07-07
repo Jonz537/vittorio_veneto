@@ -281,7 +281,6 @@ input[type="file"]::-webkit-file-upload-button {
   text-align: right;
 }
 
-
 .ez {
   position: absolute;
   right: .420rem;
@@ -373,7 +372,8 @@ input[type="file"]::-webkit-file-upload-button {
   position: absolute;
   right: 0;
   border-radius: .3rem;
-  padding: 3px;
+  padding: 5px;
+  margin: 5px;
 }
 
 .message_rec{
@@ -381,8 +381,20 @@ input[type="file"]::-webkit-file-upload-button {
   color: #bfbfbf;
   font-size: 20px;
   position: absolute;
+  padding: 5px;
+  margin: 5px;
   border-radius: .3rem;
-  padding: 3px;
+}
+
+.message_rec_sender{
+  background-color: var(--blue_receive);
+  color: #bfbfbf;
+  font-size: 12px;
+  position: absolute;
+  border-radius: .3rem;
+  padding: 5px;
+  margin: 5px;
+  margin-bottom: 18px;
 }
 
 .message_send_data{
@@ -393,6 +405,9 @@ input[type="file"]::-webkit-file-upload-button {
   right: 0;
   border-radius: .3rem;
   margin-top: 10px;
+  padding: 5px;
+  margin: 5px;
+  margin-top: 18px;
 }
 
 .message_rec_data{
@@ -401,24 +416,32 @@ input[type="file"]::-webkit-file-upload-button {
   font-size: 12px;
   position: absolute;
   border-radius: .3rem;
-  margin-top: 10px;
+  padding: 5px;
+  margin: 5px;
+  margin-top: 18px;
 }
 
 .message_send_data_audio{
   color: var(--dark_red);
   font-size: 9px;
+  padding: 5px;
+  margin: 5px;
+  margin-top: 18px;
 }
 
 .message_rec_data_audio{
   color: var(--dark_red);
   font-size: 9px;
+  padding: 5px;
+  margin: 5px;
+  margin-top: 18px;
 }
 
 .messageDiv{
   width: inherit;
   overflow:hidden;
-  height: 3.5rem;
-  margin-bottom: 1rem;
+  height: 4rem;
+  margin-bottom: 2rem;
 }
 
 .input_send {
