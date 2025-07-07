@@ -1,0 +1,41 @@
+
+
+/* Media Queries for Specific Breakpoints */
+@media only screen and (max-width: 1200px) {
+    h1 {
+        font-size: 2rem; /* Smaller heading */
+    }
+
+    h2 {
+        font-size: 1.5rem; /* Smaller subheading */
+    }
+
+    .modal-content-image {
+        width: 100%; /* Full width for images in modal */
+    }
+
+    .btn {
+        padding: 0.5rem; /* Adjust button padding */
+    }
+
+    /*TODO*/
+    .chatSidebar {
+        width: 25vw;
+    }
+
+    .bodySign {
+        width: 50vw;
+    }
+
+    .signBox {
+        width: 30vw;
+    }
+
+    .chatBody {
+        width: 50vw;
+    }
+
+    .table {
+        width: 30vw;
+    }
+}

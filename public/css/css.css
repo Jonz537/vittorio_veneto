@@ -1,21 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
 
-/*
-https://fontawesome.com
-https://ionic.io/ionicons
-https://www.eggradients.com/
-https://www.uidesigndaily.com/
-https://encycolorpedia.com/
-
-CALCOLARE FILTER: https://codepen.io/sosuke/pen/Pjoqqp
-SCROLLBAR:        https://onaircode.com/html-css-custom-scrollbar-examples/
-DROPDOWN MENU:    https://www.w3schools.com/howto/howto_js_dropdown.asp
-*/
-
-/*
-  172528
-
-*/
 :root {
   --blue: #23464d;
   --blueBackground: #172528;
@@ -488,7 +472,7 @@ input[type="file"]::-webkit-file-upload-button {
     color: white;
 }
 
-.dropdown-menu dropdown-menu-end{
+.dropdown-menu.dropdown-menu-end{
   background-color: var(--dark_red) !important;
   color: white;
 }
