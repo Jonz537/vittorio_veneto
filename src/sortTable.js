@@ -19,7 +19,7 @@ function tableSearch() {
 
 //TODO: fix sortTable
 function sortTable(n) {
-    let table = document.getElementById("userTable");
+    let table = document.getElementById("user_list");
     let rows = Array.from(table.rows);
     let sorted = false;
     while (!sorted) {

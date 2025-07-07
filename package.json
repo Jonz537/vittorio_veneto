@@ -14,7 +14,7 @@
     "express": "^5.1.0",
     "firebase": "^9.6.5",
     "firebase-admin": "^13.4.0",
-    "node-sass": "^7.0.1",
+    "sass": "^1.89.2",
     "uglify-js": "^3.14.3",
     "web-translate": "^1.2.3"
   },

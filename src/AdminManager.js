@@ -1,6 +1,6 @@
 import {get, ref} from "firebase/database";
 import {banUser, changeRole, enableUser, getUserData, getUsersData} from "./admin";
-import {tableSearch} from "./sortTable";
+import {tableSearch, sortTable} from "./sortTable";
 
 let userList;
 let users;
