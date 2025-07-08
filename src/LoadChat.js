@@ -38,7 +38,15 @@ async function addChatButton(chat, property, database, storage, userId) {
     await onValue(lastMessageQuery, (snapshot) => {
         snapshot.forEach(childSnapshot => {
             const msg = childSnapshot.val();
-            $(`#lasto-${chat.chatname}`).text(msg.text.substring(0, 12));
+
+            if (msg.type === "text") {
+                $(`#lasto-${chat.chatname}`).text(msg.text.substring(0, 12));
+            } else if (msg.type === "image") {
+                $(`#lasto-${chat.chatname}`).text("img");
+            } else if (msg.type === "audio") {
+                $(`#lasto-${chat.chatname}`).text("audio");
+            }
+
             $(`#orao-${chat.chatname}`).text(msg.date);
         });
     });
