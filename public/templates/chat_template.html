@@ -40,6 +40,18 @@
 
             <div class="chatFooter">
                 <input class="input_send svgFooter" type="text" placeholder="Write a message" id="send_message">
+                <input class="input svgFooter file-input__input" type="file" accept="image/*" placeholder="Write a message" id="myFile">
+                <div id="file-send-wrapper" class="attach-wrapper">
+                    <label class="file-input__label" for="myFile">
+                        <img src="../assets/attach.svg" alt="send" class="clip svgFooter svgChat">
+                    </label>
+                    <div id="file-preview-indicator" class="preview-indicator hidden">
+                        <div>
+                            📷
+                        </div>
+                    </div>
+                </div>
+
                 <img hidden src="../assets/send.svg" alt="send" id="send" class="svgFooter svgChat">
                 <img src="../assets/mic.svg" alt="mic" id="voice" class="svgFooter mic svgChat">
                 <img hidden src="../assets/mic.svg" alt="mic" id="btnStop" class="svgFooter mic">

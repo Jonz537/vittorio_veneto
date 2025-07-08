@@ -8,7 +8,6 @@ import {startVoice} from "./VoiceManager";
 import {addChatButton} from "./LoadChat";
 import {User} from "./User";
 import {warning} from "./Utils";
-import {changeRole} from "./admin";
 import {loadUserList} from "./AdminManager";
 
 const firebaseConfig = require('./firebaseConfig');
@@ -16,7 +15,6 @@ const firebaseConfig = require('./firebaseConfig');
 document.body.style.zoom = "100%";
 
 let chatWorld;
-let fileToUpload = false;
 let userRole = undefined;
 
 let menu_hid = $("#menu_hid");
@@ -99,8 +97,6 @@ function setupEventListeners() {
     send_elem.addClass("btn-outline-secondary");
     send_elem.removeAttr("style")
   }
-
-  $(document).on('change','#myFile' , () =>  fileToUpload = true);
 }
 
 async function handleLogin(auth, database, storage) {
@@ -184,7 +180,7 @@ function setupMessageSending(database, userId, storage) {
     if (event.key === "Enter") {
       if (isSending) return;
       isSending = true;
-      send(database, chatWorld, userId, fileToUpload, storage);
+      send(database, chatWorld, userId, storage);
       isSending = false;
     }
   };
@@ -202,9 +198,6 @@ export function remove_chat_world() {
   chatWorld = undefined;
 }
 
-export function setFileToUpload(info) {
-  fileToUpload = info;
-}
 
 export function getUserRole() {
   return userRole;

@@ -94,7 +94,6 @@ input::placeholder {
   font-size: 14px;
   font-weight: 600;
   color: #000;
-  font-size: 14px;
   background-color: transparent;
 }
 
@@ -103,6 +102,10 @@ input::placeholder {
   margin-right: 30px;
 }
 
+.clip {
+  padding-bottom: 0.9rem;
+  z-index: 1;
+}
 
 /* https://www.uidesigndaily.com/posts/sketch-login-log-in-authentication-day-895 */
 .bodySign {
@@ -670,4 +673,26 @@ button:disabled {background-color: grey}
   height: inherit;
   /* display: flex;
   flex-direction: column; */
+}
+
+.attach-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.preview-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #23464d;
+  color: white;
+  font-size: 0.8rem;
+  padding: 2px 5px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hidden {
+  display: none;
 }

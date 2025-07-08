@@ -42,6 +42,19 @@ async function addChatButton(chat, property, database, storage, userId) {
             $(`#orao-${chat.chatname}`).text(msg.date);
         });
     });
+
+    const fileInput = document.getElementById("myFile");
+    const previewIndicator = document.getElementById("file-preview-indicator");
+
+    fileInput.addEventListener("change", (event) => {
+        if (fileInput.files[0]) {
+            previewIndicator.classList.remove("hidden");
+            document.getElementById("file-send-wrapper").addEventListener("click", showModalPreview);
+        } else {
+            previewIndicator.classList.add("hidden");
+            document.getElementById("file-send-wrapper").removeEventListener("click", showModalPreview);
+        }
+    });
 }
 
 async function handleChatClick(chatWorld, chatWorldId, database, storage, userId) {
@@ -109,8 +122,8 @@ async function addText(message, userId, messageId, userList, database, storage) 
 
     if (message.type === "text") {
         await handleTextMessage(message, messageId, isSender, userList, database);
-    // } else if (message.type === "image") {
-    //     await handleMediaMessage(message, messageId, storage, "images", isSender);
+    } else if (message.type === "image") {
+        await handleMediaMessage(message, messageId, storage, "images", isSender);
     } else if (message.type === "audio") {
         await handleMediaMessage(message, messageId, storage, "audios", isSender);
     }
@@ -162,6 +175,14 @@ async function handleMediaMessage(message, messageId, storage, folder, isSender)
     } catch (error) {
         console.log("Media download error: ", error);
     }
+}
+
+function showModalPreview() {
+    const fileInput = document.getElementById("myFile");
+    let modal = document.getElementById("myModal");
+    let modalImg = document.getElementById("img01");
+    modalImg.src = URL.createObjectURL(fileInput.files[0]);
+    modal.style.display = "block";
 }
 
 export {addChatButton}
