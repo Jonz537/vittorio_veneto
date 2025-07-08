@@ -159,9 +159,9 @@ async function handleMediaMessage(message, messageId, storage, folder, isSender)
     try {
         const url = await getDownloadURL(storageRef(storage, `gs://trentochat.appspot.com/${folder}/` + message.text));
         const mediaHtml = folder === "audios"
-            ? `<audio controls id='${messageId}' class='' src='${url}'></audio>`
+            ? `<audio controls id='${messageId}' class='audio' src='${url}'></audio>`
             : `<img id='${messageId}' class='image_chat' src='${url}' alt="">`;
-        const className = isSender ? 'message_send_data' : 'message_rec_data';
+        const className = isSender ? 'message_send_data_media' : 'message_rec_data_media';
         $("#messages_in_chat").append(`<p class='${isSender ? "text-end" : ""}'><span class=''>${mediaHtml}</span><br><span class='rounded ${className} p-1'>${message.date}</span></p>`);
 
         if (folder === "images") {

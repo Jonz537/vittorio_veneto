@@ -277,11 +277,13 @@ input[type="file"]::-webkit-file-upload-button {
 .sidebarChatsLastMessageText {
   display: flex;
   text-align: left;
+  color: darkgray;
 }
 
 .sidebarChatsLastMessageHour {
   display: flex;
   text-align: right;
+  color: darkgray;
 }
 
 .ez {
@@ -370,28 +372,28 @@ input[type="file"]::-webkit-file-upload-button {
 
 .message_send{
   background-color: var(--blue_send);
-  color: #bfbfbf;
+  color: whitesmoke;
   font-size: 20px;
   position: absolute;
   right: 0;
   border-radius: .3rem;
-  padding: 5px;
+  padding: 10px;
   margin: 5px;
 }
 
 .message_rec{
   background-color: var(--blue_receive);
-  color: #bfbfbf;
+  color: whitesmoke;
   font-size: 20px;
   position: absolute;
-  padding: 5px;
+  padding: 10px;
   margin: 5px;
   border-radius: .3rem;
 }
 
 .message_rec_sender{
   background-color: var(--blue_receive);
-  color: #bfbfbf;
+  color: #28a745;
   font-size: 12px;
   position: absolute;
   border-radius: .3rem;
@@ -523,6 +525,9 @@ div.btn{
   width:300px;
   height:300px;
   object-fit: cover;
+  margin-top: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 /* MODAL STUFF */
@@ -695,4 +700,31 @@ button:disabled {background-color: grey}
 
 .hidden {
   display: none;
+}
+
+.chatHeader_admin{
+  margin-left: 2rem;
+}
+
+.titolo {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.newChatButton{
+
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  margin: auto;
+  background-color: #2c484f;
+}
+
+.newChatButton:hover{
+  background-color: #1c333a;
+}
+
+.audio {
+  margin-left: 5px;
+  margin-right: 5px;
 }
