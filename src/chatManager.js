@@ -3,9 +3,10 @@ import {push, ref, set} from "firebase/database";
 import {remove_chat_world} from "./index";
 import {ref as storageRef, uploadBytes} from "firebase/storage";
 
-const fileInput = document.getElementById("myFile");
-
 function send(database, chatWorld, userId, storage) {
+
+    const fileInput = document.getElementById("myFile");
+
     if(chatWorld){
         let messagge = $("#send_message").val().trim();
         let file = fileInput.files[0];
