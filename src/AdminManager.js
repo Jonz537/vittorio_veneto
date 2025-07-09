@@ -1,6 +1,7 @@
 import {get, ref} from "firebase/database";
 import {banUser, changeRole, enableUser, getUserData, getUsersData} from "./admin";
 import {tableSearch, sortTable} from "./sortTable";
+import {request} from "./Utils";
 
 let userList;
 let users;
@@ -11,6 +12,11 @@ async function loadUserList(database, adminUid){
     users = snapshot.val();
 
     userList = $("#user_list");
+
+    document.getElementById("logout").addEventListener("click", () => {
+        request("Are you sure?", "Do you rellay want to logout?");
+        document.getElementById("confirm_modal").addEventListener("click", () => location.reload());
+    });
 
     console.log(users);
     $("#admin_name").append(users[adminUid].name);

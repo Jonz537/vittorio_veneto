@@ -51,6 +51,11 @@ function createGroup(database, storage, userId){
 
     const file = document.getElementById('group_create_image').files[0];
 
+    if (group_to_create === "" || group_create_password === "" || file === undefined) {
+        warning("Inserisci tutti i parametri")
+        return;
+    }
+
     const postListRefe = ref(database, 'chat');
     const newPostRefe = push(postListRefe);
 

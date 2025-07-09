@@ -3,7 +3,7 @@ import { getDownloadURL, ref as storageRef } from "firebase/storage";
 import {deleteChat, exitChat, send} from "./chatManager";
 import {getUserRole, set_chat_world} from "./index";
 import {startVoice} from "./VoiceManager";
-import {requestFoot} from "./Utils";
+import {request, requestFoot} from "./Utils";
 import {banUser} from "./admin";
 
 const firebaseListeners = {
@@ -12,6 +12,12 @@ const firebaseListeners = {
 
 async function addChatButton(chat, property, database, storage, userId) {
     const chatId = chat.chatname.replace(/\s/g, "_");
+
+    document.getElementById("logout").addEventListener("click", () => {
+        request("Are you sure?", "Do you rellay want to logout?");
+        document.getElementById("confirm_modal").addEventListener("click", () => location.reload());
+    });
+
 
     $("#chat_lists").append(`
     <div value="${property}" id="${chatId}" class="sidebarChats">
