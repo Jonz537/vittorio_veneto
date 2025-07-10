@@ -1,7 +1,7 @@
 import {get, onValue, ref, query, limitToLast, onChildAdded, orderByKey} from "firebase/database";
 import { getDownloadURL, ref as storageRef } from "firebase/storage";
 import {deleteChat, exitChat, send} from "./chatManager";
-import {getUserRole, set_chat_world} from "./index";
+import {getUserRole, initializeChatView, loadChatPage, set_chat_world} from "./index";
 import {startVoice} from "./VoiceManager";
 import {request, requestFoot} from "./Utils";
 import {banUser} from "./admin";
@@ -86,7 +86,10 @@ async function handleChatClick(chatWorld, chatWorldId, database, storage, userId
         console.error("Image path not found in the database.");
     }
 
-    document.getElementById("delete_chat").addEventListener("click", () => deleteChat(database, chatWorld));
+    $("#delete_chat").off().on("click", () =>
+        deleteChat(database, chatWorld, userId, storageRef, storage)
+    );
+
     document.getElementById("exit_chat").addEventListener("click", () => exitChat(database, chatWorld, chatWorldId, userId));
 
     const messagesRef = ref(database, 'chat/messages/' + chatWorld + '/messages');
@@ -97,7 +100,10 @@ async function handleChatClick(chatWorld, chatWorldId, database, storage, userId
     try {
         const snapshot = await get(messagesRef);
         const messages = snapshot.val();
-        if (!messages) return;
+        if (!messages) {
+            document.getElementById("messages_in_chat").innerHTML = "";
+            return;
+        }
 
         $("#messages_in_chat").html("");
 

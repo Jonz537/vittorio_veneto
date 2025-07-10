@@ -1,6 +1,6 @@
 import {getTimeString, request} from "./Utils";
 import {push, ref, set} from "firebase/database";
-import {remove_chat_world} from "./index";
+import {initializeChatView, loadChatPage, remove_chat_world} from "./index";
 import {ref as storageRef, uploadBytes} from "firebase/storage";
 
 function send(database, chatWorld, userId, storage) {
@@ -54,13 +54,15 @@ async function sendFile(database, chatWorld, userId, storage, file) {
     });
 }
 
-function deleteChat(database, chatWorld) {
+function deleteChat(database, chatWorld, userId, storageRef, storage) {
     request("Are you sure?", "Do you really want to delete all the messages from this chat? \n They will be lost forever");
 
     document.getElementById("confirm_modal").addEventListener('click', function () {
         set(ref(database, "chat/messages/" + chatWorld + "/messages"), {
-
-        }).catch((error) => console.log("error deleting the chat: " + error));
+            first: "first"
+        }).then(() => loadChatPage()
+            .then(() => initializeChatView(database, userId, storageRef, storage))
+        ).catch((error) => console.log("error deleting the chat: " + error))
     }, {once:true});
 }
 

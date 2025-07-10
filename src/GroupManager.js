@@ -65,7 +65,11 @@ function createGroup(database, storage, userId){
 
         set(ref(database, "chat/messages/" + group_to_create), {
             img: newPostRefe.key + "." + file.type.substring(6, 10),
-            psw: group_create_password
+            psw: group_create_password,
+        }).catch();
+
+        set(ref(database, "chat/messages/" + group_to_create + "/messages"), {
+            first: "first"
         }).catch();
 
         const joinGroupRef = ref(database, 'chat/users/' + userId + '/chats');
