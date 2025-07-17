@@ -126,9 +126,12 @@ async function handleLogin(auth, database, storage) {
   } catch (error) {
     if (error.code === 'auth/user-disabled') {
       warning("Your account has been banned!");
+    } else if (error.code === 'auth/too-many-requests') {
+      warning("You have failed to login too many times");
     } else {
       warning("Wrong email or password");
     }
+    console.log(error)
   }
 }
 
