@@ -15,7 +15,9 @@ async function loadUserList(database, adminUid){
 
     document.getElementById("logout").addEventListener("click", () => {
         request("Are you sure?", "Do you rellay want to logout?");
-        document.getElementById("confirm_modal").addEventListener("click", () => location.reload());
+        $("#confirm_modal").off().on("click", () =>
+            location.reload()
+        );
     });
 
     console.log(users);

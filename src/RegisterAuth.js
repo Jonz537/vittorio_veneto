@@ -43,7 +43,7 @@ async function forgot (auth) {
         "<input type='text' class='form-control w-100' placeholder='Enter your email' id='email_reset'>",
         "<button type='button' class='btn btn-danger chiudi' data-bs-dismiss='modal'>Cancel</button><button class='btn btn-success' id='forgot_conf' data-bs-dismiss='modal'>Confirm</button> ");
 
-    document.getElementById("confirm_modal").addEventListener('click', async function forgot () {
+    $("#confirm_modal").off().on('click', async function forgot () {
         sendPasswordResetEmail(auth, $("#email_reset").val())
             .then(() => console.log("Email di recupero"))
             .catch((error) => console.log(error));

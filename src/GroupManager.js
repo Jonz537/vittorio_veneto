@@ -1,47 +1,74 @@
-import {equalTo, onValue, orderByChild, push, query, ref, set} from "firebase/database";
+import {equalTo, get, onValue, orderByChild, push, query, ref, set} from "firebase/database";
 import {warning} from "./Utils";
 import {ref as storageRef, uploadBytes} from "firebase/storage";
 import {loadChatPage, initializeChatView} from "./index";
 
-function joinGroup(database, userId, storage){
+async function joinGroup(database, userId, storage){
     const group_to_enter = $("#group_to_enter").val();
     const group_password = $("#group_password").val();
 
-    if(group_to_enter != null && group_password != null){
-        onValue(ref(database, "chat/messages/" + group_to_enter + "/psw"),(snapshot) => {
+    if(group_to_enter !== "" && group_password !== ""){
 
-            let passwordGiusta = snapshot.val();
+        let snapshotPassword = await get(ref(database, "chat/messages/" + group_to_enter + "/psw"));
+        let passwordGiusta = snapshotPassword.val();
 
-            let queryAlreadyInGroup = query(ref(database, "chat/users/" + userId + "/chats"), orderByChild("chatname"), equalTo(group_to_enter));
+        let queryAlreadyInGroup = query(ref(database, "chat/users/" + userId + "/chats"), orderByChild("chatname"), equalTo(group_to_enter));
+        let alreadyGroupSnapshot = await get(queryAlreadyInGroup);
 
-            onValue(queryAlreadyInGroup, (snapshot) => {
+        if(!alreadyGroupSnapshot.exists()){
+            if(group_password === passwordGiusta){
+                const join_group_ref = ref(database, 'chat/users/' + userId + '/chats');
+                const new_join_group_ref = push(join_group_ref);
 
-                if(!snapshot.exists()){
-                    if(group_password === passwordGiusta){
-                        const join_group_ref = ref(database, 'chat/users/' + userId + '/chats');
-                        const new_join_group_ref = push(join_group_ref);
+                set(new_join_group_ref, {
+                    chatname: group_to_enter
+                });
 
-                        set(new_join_group_ref, {
-                            chatname: group_to_enter
-                        });
+                loadChatPage()
+                    .then(() => initializeChatView(database, userId, storageRef, storage));
 
-                        loadChatPage()
-                            .then(() => initializeChatView(database, userId, storageRef, storage));
+            }else{
+                warning("Wrong group name e password");
+            }
+        }else{
+            warning("You are already in this group");
+        }
 
-                    }else{
-                        warning("Credenziali errate");
-                    }
-                }else{
-                    warning("Sei gia in questo gruppo");
-                }
-            }, {
-                onlyOnce:true
-            });
-        }, {
-            onlyOnce:true
-        });
+        // onValue(ref(database, "chat/messages/" + group_to_enter + "/psw"),(snapshot) => {
+        //
+        //     let passwordGiusta = snapshot.val();
+        //
+        //     let queryAlreadyInGroup = query(ref(database, "chat/users/" + userId + "/chats"), orderByChild("chatname"), equalTo(group_to_enter));
+        //
+        //     onValue(queryAlreadyInGroup, (snapshot) => {
+        //
+        //         if(!snapshot.exists()){
+        //             if(group_password === passwordGiusta){
+        //                 const join_group_ref = ref(database, 'chat/users/' + userId + '/chats');
+        //                 const new_join_group_ref = push(join_group_ref);
+        //
+        //                 set(new_join_group_ref, {
+        //                     chatname: group_to_enter
+        //                 });
+        //
+        //                 loadChatPage()
+        //                     .then(() => initializeChatView(database, userId, storageRef, storage));
+        //
+        //             }else{
+        //                 warning("Credenziali errate");
+        //             }
+        //         }else{
+        //             warning("Sei gia in questo gruppo");
+        //         }
+        //     }, {
+        //         onlyOnce:true
+        //     });
+        // }, {
+        //     onlyOnce:true
+        // });
+
     }else{
-        warning("Compila tutti i campi");
+        warning("Fill in all the fields");
     }
 }
 
@@ -52,7 +79,7 @@ function createGroup(database, storage, userId){
     const file = document.getElementById('group_create_image').files[0];
 
     if (group_to_create === "" || group_create_password === "" || file === undefined) {
-        warning("Inserisci tutti i parametri")
+        warning("Fill in all the fields")
         return;
     }
 

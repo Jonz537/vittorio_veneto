@@ -1,4 +1,4 @@
-import {get, onValue, ref, query, limitToLast, onChildAdded, orderByKey} from "firebase/database";
+import {get, onValue, ref, query, limitToLast, onChildAdded, orderByKey, off} from "firebase/database";
 import { getDownloadURL, ref as storageRef } from "firebase/storage";
 import {deleteChat, exitChat, send} from "./chatManager";
 import {getUserRole, initializeChatView, loadChatPage, set_chat_world} from "./index";
@@ -14,10 +14,14 @@ async function addChatButton(chat, property, database, storage, userId) {
     const chatId = chat.chatname.replace(/\s/g, "_");
 
     document.getElementById("logout").addEventListener("click", () => {
-        request("Are you sure?", "Do you rellay want to logout?");
-        document.getElementById("confirm_modal").addEventListener("click", () => location.reload());
+        request("Are you sure?", "Do you really want to logout?");
+        $("#confirm_modal").off().on("click", () =>
+            location.reload()
+        );
     });
 
+    console.log(chat);
+    console.log(property);
 
     $("#chat_lists").append(`
     <div value="${property}" id="${chatId}" class="sidebarChats">
@@ -41,6 +45,7 @@ async function addChatButton(chat, property, database, storage, userId) {
 
     const lastMessageQuery = query(ref(database, `chat/messages/${chat.chatname}/messages`), orderByKey(), limitToLast(1));
 
+    off(lastMessageQuery);
     await onValue(lastMessageQuery, (snapshot) => {
         snapshot.forEach(childSnapshot => {
             const msg = childSnapshot.val();
@@ -90,7 +95,11 @@ async function handleChatClick(chatWorld, chatWorldId, database, storage, userId
         deleteChat(database, chatWorld, userId, storageRef, storage)
     );
 
-    document.getElementById("exit_chat").addEventListener("click", () => exitChat(database, chatWorld, chatWorldId, userId));
+    $("#exit_chat").off().on("click", () =>
+        exitChat(database, chatWorld, chatWorldId, userId)
+    );
+
+    // document.getElementById("exit_chat").addEventListener("click", () => exitChat(database, chatWorld, chatWorldId, userId));
 
     const messagesRef = ref(database, 'chat/messages/' + chatWorld + '/messages');
     const userList = {};

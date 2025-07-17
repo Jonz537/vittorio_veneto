@@ -1,12 +1,11 @@
 import { initializeApp } from "firebase/app";
-import {getDatabase, onValue, ref} from "firebase/database";
+import {getDatabase, onValue, ref, off} from "firebase/database";
 import {getDownloadURL, getStorage, ref as storageRef} from "firebase/storage";
 import { getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import {initializeLoginPage, initializerJoinGroupPage, initializerRegisterPage} from "./listenerManager";
 import {send} from "./chatManager";
 import {startVoice} from "./VoiceManager";
 import {addChatButton} from "./LoadChat";
-import {User} from "./User";
 import {warning} from "./Utils";
 import {loadUserList} from "./AdminManager";
 
@@ -21,8 +20,6 @@ let menu_hid = $("#menu_hid");
 let send_elem = $("#send");
 
 let modal = document.getElementById("myModal");
-
-let activeUser;
 
 let isSending = false;
 
@@ -156,10 +153,10 @@ function initializeChatView(database, userId, storageRef, storage) {
 function loadUserChats(database, userId, storage) {
   const usernameReference = ref(database, 'chat/users/' + userId);
 
+  off(usernameReference);
+
   onValue(usernameReference, async (snapshot) => {
     const user = snapshot.val();
-
-    activeUser = new User(user.name, user.roles);
 
     $("#user_name").html(`${user.name}<br>`);
     $("#chat_lists").empty();
