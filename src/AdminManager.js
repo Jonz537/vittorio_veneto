@@ -36,8 +36,8 @@ async function loadUserList(database, adminUid){
         $("#user_list").append(
             `<tr id="row-${userId}">
                 <td>${name}</td>
-                <td class="user-role">${(data[userId].role === "none" ? "utente base" : data[userId].role )}</td>
-                <td class="user-status ${(data[userId].disabled ? "status-bannato" : "status-attivo")}">${(data[userId].disabled ? "Bannato" : "Attivo") }</td>
+                <td class="user-role">${(data[userId].role === "none" ? "base user" : data[userId].role )}</td>
+                <td class="user-status ${(data[userId].disabled ? "status-bannato" : "status-attivo")}">${(data[userId].disabled ? "Banned" : "Active") }</td>
                 <td><button class="btn btn-ban" data-userid="${userId}">Banna</button></td>
                 <td><button class="btn btn-unban" data-userid="${userId}">Sbanna</button></td>
                 <td><button class="btn btn-promote" data-userid="${userId}">Promuovi</button></td>
@@ -73,9 +73,9 @@ function addButtonListener() {
 
 async function updateUserRow(userId) {
     const data = await getUserData(userId);
-    const roleText = data.role === "none" ? "utente base" : data.role;
+    const roleText = data.role === "none" ? "base user" : data.role;
     const statusClass = data.disabled ? "status-bannato" : "status-attivo";
-    const statusText = data.disabled ? "Bannato" : "Attivo";
+    const statusText = data.disabled ? "Banned" : "Active";
 
     const row = $(`#row-${userId}`);
     row.find(".user-role").text(roleText);
