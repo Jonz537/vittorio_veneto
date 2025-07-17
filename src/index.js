@@ -125,9 +125,9 @@ async function handleLogin(auth, database, storage) {
         });
   } catch (error) {
     if (error.code === 'auth/user-disabled') {
-      warning("Il tuo account è stato disabilitato!")
+      warning("Your account has been banned!");
     } else {
-      console.error("Login failed:", error.message);
+      warning("Wrong email or password");
     }
   }
 }

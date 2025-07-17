@@ -50,13 +50,9 @@ async function forgot (auth) {
     });
 }
 
-function emailCheck(email)   {
-    if(emptyString(email))   {
-        // console.log("email vuota");
-        return false;
-    } else  {
-        return email.includes("@") && email.includes(".com");
-    }
+function emailCheck(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return typeof email === "string" && regex.test(email);
 }
 
 function usernameCheck(username) {
