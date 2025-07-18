@@ -20,8 +20,6 @@ async function addChatButton(chat, property, database, storage, userId) {
         );
     });
 
-    console.log(chat);
-    console.log(property);
 
     $("#chat_lists").append(`
     <div value="${property}" id="${chatId}" class="sidebarChats">

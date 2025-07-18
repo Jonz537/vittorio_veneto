@@ -205,4 +205,3 @@ export function getUserRole() {
 
 export {loadChatPage, loadLoginPage, loadRegisterPage, handleLogin,
   loadGroupPage, setupMessageSending, loadUserChats, initializeChatView}
-

@@ -57,20 +57,19 @@ async function sendFile(database, chatWorld, userId, storage, file) {
 function deleteChat(database, chatWorld, userId, storageRef, storage) {
     request("Are you sure?", "Do you really want to delete all the messages from this chat? \n They will be lost forever");
 
-    $("#confirm_modal").off().on('click', function () {
-        set(ref(database, "chat/messages/" + chatWorld + "/messages"), {
+    $("#confirm_modal").off().on('click', async function () {
+        await set(ref(database, "chat/messages/" + chatWorld + "/messages"), {
             first: "first"
         }).then(() => loadChatPage()
             .then(() => initializeChatView(database, userId, storageRef, storage))
         ).catch((error) => console.log("error deleting the chat: " + error))
-    }, {once:true});
+    });
 }
 
 function exitChat(database, chatWorld, chatWorldId, userId) {
     request("Are you sure?", "Do you really want to exit this chat?");
 
     $("#confirm_modal").off().on('click', async function () {
-
         // console.log(chat_world_id);
         await set(ref(database,"chat/users/" + userId + "/chats/" + chatWorldId), {
             chatname: null
